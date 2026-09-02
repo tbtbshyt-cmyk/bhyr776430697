@@ -1,0 +1,272 @@
+/* =========================================================
+   محلات أبو بشار للملابس والأحذية — صفحة الروابط الرسمية
+   تصميم فاخر: أسود × ذهبي معدني — Mobile First — RTL
+   ========================================================= */
+
+:root{
+  --bg:#0a0a0c;
+  --panel:#14120e;
+  --line:#2a2519;
+  --gold:#d4af37;
+  --gold-2:#e8c877;
+  --gold-3:#f6e3a1;
+  --gold-dim:rgba(212,175,55,.28);
+  --ink:#f4ecda;
+  --muted:#b3a37c;
+  --wa:#25d366;
+  --radius:18px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  min-height:100dvh;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Cairo',system-ui,'Segoe UI',Tahoma,Arial,sans-serif;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+::selection{background:var(--gold);color:#171307}
+
+/* ---------- الخلفية الفاخرة ---------- */
+.bg{
+  position:fixed;inset:0;z-index:-1;
+  background:
+    radial-gradient(1100px 540px at 50% -12%, rgba(212,175,55,.16), transparent 62%),
+    radial-gradient(760px 420px at 92% 108%, rgba(212,175,55,.09), transparent 60%),
+    radial-gradient(560px 320px at 6% 78%, rgba(212,175,55,.06), transparent 60%),
+    var(--bg);
+}
+.bg::before{
+  content:"";position:absolute;inset:0;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.bg::after{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:.7;
+}
+
+/* ---------- الهيكل ---------- */
+.page{
+  max-width:680px;
+  margin-inline:auto;
+  padding:38px 18px 30px;
+}
+
+/* ---------- الترويسة ---------- */
+.hero{text-align:center}
+.logo-wrap{display:inline-block;animation:glowPulse 4s ease-in-out infinite}
+.logo{width:112px;height:112px;filter:drop-shadow(0 0 22px rgba(212,175,55,.35))}
+@keyframes glowPulse{
+  0%,100%{filter:drop-shadow(0 0 14px rgba(212,175,55,.22))}
+  50%{filter:drop-shadow(0 0 26px rgba(212,175,55,.42))}
+}
+.hero h1{
+  margin:14px 0 4px;
+  font-size:clamp(1.65rem,6vw,2.5rem);
+  font-weight:900;
+  letter-spacing:.5px;
+  background:linear-gradient(180deg,var(--gold-3),var(--gold-2) 45%,#c39a3e 75%,var(--gold-3));
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.hero h1 span{
+  display:block;
+  font-size:clamp(1rem,3.6vw,1.35rem);
+  font-weight:700;
+  letter-spacing:2px;
+  background:linear-gradient(90deg,#9a8757,var(--gold-2),#9a8757);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.tagline{
+  margin:10px 0 2px;
+  color:var(--gold-2);
+  font-weight:800;
+  font-size:clamp(.95rem,3.4vw,1.1rem);
+}
+.sub{
+  margin:2px auto 0;
+  max-width:44ch;
+  color:var(--muted);
+  font-size:clamp(.82rem,3vw,.95rem);
+}
+
+/* ---------- أزرار المشاركة ---------- */
+.actions{
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+  margin:22px 0 6px;
+}
+.chip{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 18px;
+  border-radius:999px;
+  border:1px solid var(--gold-dim);
+  background:rgba(212,175,55,.06);
+  color:var(--gold-2);
+  font-family:inherit;font-size:.88rem;font-weight:700;
+  cursor:pointer;
+  transition:background .18s,color .18s,border-color .18s,transform .12s;
+}
+.chip svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.chip:hover{background:linear-gradient(180deg,var(--gold-2),#c39a3e);color:#171307;border-color:transparent}
+.chip:active{transform:scale(.96)}
+
+/* ---------- بطاقات الحسابات ---------- */
+.links{display:grid;gap:14px;margin-top:18px}
+.card{
+  position:relative;
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.008)),var(--panel);
+  color:var(--ink);
+  text-decoration:none;
+  overflow:hidden;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .28s ease;
+}
+.card::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(105deg,transparent 42%,rgba(232,200,119,.13) 50%,transparent 58%);
+  transform:translateX(-120%);
+  transition:transform .65s ease;
+}
+.card:hover{transform:translateY(-3px);border-color:rgba(212,175,55,.55);box-shadow:0 12px 32px -14px rgba(212,175,55,.35)}
+.card:hover::after{transform:translateX(120%)}
+.card:active{transform:translateY(-1px) scale(.985)}
+.card:focus-visible,.chip:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
+
+.card__icon{
+  flex:none;width:48px;height:48px;
+  display:grid;place-items:center;
+  border-radius:14px;
+  background:rgba(212,175,55,.10);
+  border:1px solid rgba(212,175,55,.25);
+  color:var(--gold-2);
+  transition:transform .18s ease;
+}
+.card__icon svg{width:26px;height:26px;fill:currentColor}
+.card:hover .card__icon{transform:scale(1.08) rotate(-3deg)}
+
+.card--whatsapp .card__icon{background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.4);color:#7ee2a0}
+.card--facebook .card__icon{color:#8ab4f8;background:rgba(24,119,242,.10);border-color:rgba(24,119,242,.35)}
+.card--instagram .card__icon{color:#f0a2c0;background:rgba(225,48,108,.10);border-color:rgba(225,48,108,.35)}
+.card--snapchat .card__icon{color:#ffe45c;background:rgba(255,228,92,.10);border-color:rgba(255,228,92,.35)}
+
+.card__text{display:flex;flex-direction:column;gap:2px;min-width:0}
+.card__title{font-weight:800;font-size:1.06rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card__desc{color:var(--muted);font-size:.85rem}
+.card__handle{color:var(--gold-2);font-size:.74rem;font-weight:700;opacity:.85;direction:ltr}
+.card__badge{
+  font-style:normal;
+  font-size:.66rem;font-weight:800;letter-spacing:.3px;
+  padding:2px 10px;border-radius:999px;
+  background:linear-gradient(90deg,var(--gold-2),#c39a3e);
+  color:#171307;
+}
+.card__arrow{margin-inline-start:auto;color:var(--gold);opacity:.65;transition:transform .18s,opacity .18s;flex:none}
+.card__arrow svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.card:hover .card__arrow{transform:translateX(-4px);opacity:1}
+
+.card.featured{
+  border-color:rgba(212,175,55,.6);
+  background:linear-gradient(180deg,rgba(212,175,55,.12),rgba(212,175,55,.03)),var(--panel);
+  box-shadow:0 10px 44px -18px rgba(212,175,55,.5);
+}
+
+/* ---------- رمز QR ---------- */
+.qr{
+  margin-top:30px;
+  display:grid;gap:20px;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.006)),var(--panel);
+}
+.qr__box{
+  justify-self:center;
+  width:178px;height:178px;
+  padding:12px;
+  background:#f6ecd4;
+  border-radius:16px;
+  border:1px solid #d9c08a;
+  box-shadow:0 0 0 4px rgba(212,175,55,.18),0 10px 30px -12px rgba(0,0,0,.6);
+}
+.qr__box svg{width:100%;height:100%;display:block}
+.qr__box path{fill:#14120c}
+.qr__info h2{margin:0 0 4px;font-size:1.12rem;color:var(--gold-2);font-weight:800}
+.qr__info p{margin:0;color:var(--muted);font-size:.88rem}
+.qr__actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.qr__url{display:none;margin-top:10px;font-size:.72rem;color:#6b5c39;word-break:break-all}
+
+@media (min-width:640px){
+  .qr{grid-template-columns:auto 1fr;align-items:center;padding:26px}
+  .qr__box{width:200px;height:200px}
+}
+
+/* ---------- التذييل ---------- */
+footer{
+  margin-top:36px;text-align:center;
+  padding-top:18px;
+  border-top:1px solid transparent;
+  border-image:linear-gradient(90deg,transparent,var(--gold-dim),transparent) 1;
+}
+footer p{margin:2px 0;color:var(--muted);font-size:.8rem}
+.footer-note{opacity:.75;font-size:.72rem !important}
+
+/* ---------- توست ---------- */
+#toast{
+  position:fixed;bottom:22px;left:50%;
+  transform:translate(-50%,16px);
+  background:#171307;
+  border:1px solid var(--gold-dim);
+  color:var(--gold-2);
+  padding:10px 22px;border-radius:999px;
+  font-size:.88rem;font-weight:700;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+  box-shadow:0 10px 30px -10px rgba(0,0,0,.7);
+  z-index:50;max-width:88vw;text-align:center;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- حركات الدخول ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.hero{animation:rise .55s ease both}
+.actions{animation:rise .55s .08s ease both}
+.links .card{animation:rise .5s ease both}
+.links .card:nth-child(1){animation-delay:.14s}
+.links .card:nth-child(2){animation-delay:.2s}
+.links .card:nth-child(3){animation-delay:.26s}
+.links .card:nth-child(4){animation-delay:.32s}
+.links .card:nth-child(5){animation-delay:.38s}
+.links .card:nth-child(6){animation-delay:.44s}
+.links .card:nth-child(7){animation-delay:.5s}
+.links .card:nth-child(8){animation-delay:.56s}
+.qr{animation:rise .55s .4s ease both}
+footer{animation:rise .55s .5s ease both}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+
+/* ---------- الطباعة: إظهار رمز QR فقط ---------- */
+@media print{
+  body{background:#fff;color:#000}
+  .bg,.actions,.links,footer,.qr__actions,#toast{display:none !important}
+  .page{max-width:100%;padding:10mm}
+  .qr{border:none;background:none;box-shadow:none;display:block;text-align:center;margin:0}
+  .qr__box{background:#fff;border:2px solid #000;box-shadow:none;margin:0 auto 6mm}
+  .qr__box path{fill:#000}
+  .qr__info h2{color:#000}
+  .qr__info p{color:#333}
+  .qr__url{display:block;color:#000}
+  .hero .logo-wrap,.hero .sub,.hero .tagline{display:none}
+  .hero h1{background:none;-webkit-text-fill-color:#000;color:#000;font-size:20pt}
+  .hero h1 span{background:none;-webkit-text-fill-color:#000;color:#000}
+}

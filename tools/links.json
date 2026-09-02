@@ -1,0 +1,30 @@
+[
+  {
+    "platform": "whatsapp",
+    "title": "واتساب [قناة التخفيضات الرسمية]",
+    "desc": "🎉 عروض وتخفيضات أبو بشار أولًا بأول — انضم للقناة الآن",
+    "url": "https://whatsapp.com/channel/0029Vb85ukv5a23wwbnPLv46",
+    "featured": true
+  },
+  {
+    "platform": "facebook",
+    "title": "فيسبوك",
+    "desc": "📘 تابعنا على صفحتنا الرسمية على فيسبوك",
+    "url": "https://www.facebook.com/share/19bNQY5Jr3/",
+    "featured": false
+  },
+  {
+    "platform": "instagram",
+    "title": "إنستغرام (@bshyr75625)",
+    "desc": "📸 تابع أحدث المنتجات والوصلات الجديدة",
+    "url": "https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=yx5dnba",
+    "featured": false
+  },
+  {
+    "platform": "snapchat",
+    "title": "سناب شات (bshyttbt26)",
+    "desc": "👻 أضفنا على سناب شات وشاهد جديدنا",
+    "url": "https://www.snapchat.com/add/bshyttbt26?share_id=Y56jsLpIkT0&locale=ar-EG",
+    "featured": false
+  }
+]
