@@ -81,7 +81,10 @@
     var qr = qrInstance(url);
     if (!qr) return;
     var tag = qr.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
-    box.innerHTML = tag.replace('<svg', '<svg style="width:100%;height:100%"');
+    tag = tag
+      .replace('<svg', '<svg style="width:100%;height:100%"')
+      .replace('fill="white"', 'fill="#f6ecd4"'); /* نفس خلفية البطاقة */
+    box.innerHTML = tag;
   }
 
   function printQr() { window.print(); }
