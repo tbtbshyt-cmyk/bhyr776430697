@@ -1,7 +1,18 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
+<script>
+/* تطبيق الثيم المحفوظ قبل الرسم (بلا وميض) — v2.1 */
+(function () {
+  try {
+    var t = localStorage.getItem("abb-theme");
+    document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+  } catch (e) {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>محلات أبو بشار للملابس والأحذية | تابعنا على منصات التواصل</title>
 <meta name="description" content="محلات أبو بشار للملابس والأحذية — صفحتك الأولى لكل حساباتنا: واتساب، فيسبوك، انستغرام، وسناب شات. تابع أحدث المنتجات والتخفيضات، وتواصل معنا مباشرة.">
@@ -70,6 +81,38 @@
   --shadow:0 18px 40px rgba(0,0,0,.5);
   --gap:12px;
 }
+
+/* ─── الثيم الفاتح (اختيار المستخدم — يُحفظ في المتصفح) v2.1 ─── */
+html[data-theme="light"]{
+  --bg:#faf6ec; --bg2:#f1e9d6;
+  --ink:#28210e; --muted:#7d6f4c;
+  --gold:#a67d21; --gold-lt:#8a6516; --gold-dk:#6e5110;
+  --line:rgba(166,125,33,.28); --line-2:rgba(166,125,33,.55);
+  --card:rgba(255,255,255,.78); --card-h:rgba(212,175,55,.16);
+  --shadow:0 14px 30px rgba(122,94,22,.16);
+  color-scheme:light;
+}
+html[data-theme="light"] body{
+  background:
+    radial-gradient(900px 480px at 50% -12%, rgba(212,175,55,.22), transparent 62%),
+    radial-gradient(700px 520px at 108% 104%, rgba(212,175,55,.12), transparent 60%),
+    linear-gradient(180deg,var(--bg),var(--bg2) 60%,var(--bg));
+}
+html[data-theme="light"] h1{
+  background:linear-gradient(180deg,#6e5110,var(--gold) 55%,#4c380a);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+html[data-theme="light"] #search::placeholder{color:#a3946f}
+html[data-theme="light"] .emblem{filter:drop-shadow(0 10px 22px rgba(166,125,33,.30))}
+html[data-theme="light"] dialog{
+  background:linear-gradient(180deg,#fffdf7,#f5eedb);box-shadow:0 30px 70px rgba(94,74,18,.28);
+}
+html[data-theme="light"] dialog::backdrop{background:rgba(70,58,22,.35)}
+html[data-theme="light"] #toast{
+  background:linear-gradient(135deg,#fffdf6,#f1ead7);color:#6e5110;box-shadow:0 16px 40px rgba(122,94,22,.25);
+}
+html[data-theme="light"] footer{color:#6f6349}
+
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
@@ -150,7 +193,7 @@ h1{
 .cards{display:flex;flex-direction:column;gap:var(--gap)}
 
 .card{
-  position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;
+  position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto auto;
   align-items:center;gap:12px;padding:13px 14px;border-radius:var(--r);
   background:linear-gradient(135deg,var(--card),rgba(212,175,55,.03));
   border:1px solid var(--line);box-shadow:var(--shadow);
@@ -183,7 +226,7 @@ h1{
 .s{color:var(--muted);font-size:.79rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .copy-one{
   width:34px;height:34px;flex:0 0 34px;border-radius:11px;cursor:pointer;position:relative;z-index:3;
-  border:1px solid var(--line);background:rgba(255,255,255,.03);display:grid;place-items:center;transition:.2s;
+  border:1px solid var(--line);background:var(--card);display:grid;place-items:center;transition:.2s;
 }
 .copy-one svg{width:15px;height:15px;fill:var(--muted);transition:.2s}
 .copy-one:hover{background:rgba(212,175,55,.18);border-color:var(--line-2)}
@@ -196,6 +239,43 @@ h1{
   border:1px dashed var(--line);color:var(--muted);font-weight:700;font-size:.9rem;background:var(--card);
 }
 .no-results.show{display:block}
+
+/* ═════════════════════════ زر الثيم (فاتح/داكن) v2.1 ═════════════════════════ */
+.theme-btn{
+  position:fixed;top:calc(14px + env(safe-area-inset-top,0px));inset-inline-end:14px;z-index:40;
+  width:40px;height:40px;border-radius:50%;cursor:pointer;display:grid;place-items:center;padding:0;
+  border:1px solid var(--line-2);background:var(--card);color:var(--gold-lt);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  box-shadow:0 8px 22px rgba(0,0,0,.35);transition:transform .2s,border-color .2s,background .2s;
+}
+.theme-btn:hover{border-color:var(--gold);transform:scale(1.07)}
+.theme-btn:active{transform:scale(.97)}
+.theme-btn svg{width:19px;height:19px;fill:currentColor}
+.theme-btn .ray{stroke:currentColor;stroke-width:44;stroke-linecap:round;fill:none}
+.theme-btn .sun,.theme-btn .moon{display:none}
+html[data-theme="dark"] .theme-btn .sun{display:block}
+html[data-theme="light"] .theme-btn .moon{display:block}
+html[data-theme="light"] .theme-btn{background:rgba(255,255,255,.9);box-shadow:0 8px 22px rgba(122,94,22,.22)}
+
+/* أزرار أفعال البطاقة (مفضلة / مشاركة / نسخ) v2.1 */
+.fav-one,.share-one{
+  width:32px;height:32px;flex:0 0 32px;border-radius:10px;cursor:pointer;position:relative;z-index:3;
+  border:1px solid var(--line);background:var(--card);display:grid;place-items:center;transition:.2s;
+}
+.fav-one svg,.share-one svg{width:14px;height:14px;fill:var(--muted);transition:.2s}
+.fav-one:hover,.share-one:hover{background:rgba(212,175,55,.18);border-color:var(--line-2)}
+.fav-one:hover svg,.share-one:hover svg{fill:var(--gold-lt)}
+.fav-one[aria-pressed="true"]{background:rgba(212,175,55,.22);border-color:var(--line-2)}
+.fav-one[aria-pressed="true"] svg{fill:var(--gold-lt)}
+
+/* القفز المباشر إلى بطاقة عبر رابط (#platform) v2.1 */
+.card:focus{outline:none}
+.card.flash{animation:flashRing 1.6s ease-out 2}
+@keyframes flashRing{
+  0%{box-shadow:0 0 0 0 rgba(212,175,55,0)}
+  30%{box-shadow:0 0 0 7px rgba(212,175,55,.5)}
+  100%{box-shadow:0 0 0 0 rgba(212,175,55,0)}
+}
 
 /* ═════════════════════════ أدوات الصفحة ═════════════════════════ */
 .tools-head{
@@ -282,7 +362,7 @@ dialog .hint{margin:0 0 14px;color:var(--muted);font-size:.82rem;font-weight:600
 /* ═════════════════════════ الطباعة (بطاقة QR للمحل) ═════════════════════════ */
 @media print{
   body{background:#fff !important;color:#000 !important}
-  .wrap,.sparks,#toast,dialog{display:none !important}
+  .wrap,.sparks,#toast,dialog,.theme-btn{display:none !important}
   #print-card{
     display:block !important;position:static;padding:14mm;text-align:center;color:#000;
     font-family:"Cairo",system-ui,sans-serif;
@@ -300,6 +380,25 @@ dialog .hint{margin:0 0 14px;color:var(--muted);font-size:.82rem;font-weight:600
 <body>
 <a class="skip" href="#links">تخطَّ إلى الروابط</a>
 <div class="sparks" aria-hidden="true"><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span></div>
+
+<!-- ═══════════ زر تبديل الثيم (فاتح/داكن) v2.1 ═══════════ -->
+<button class="theme-btn" id="themeBtn" type="button" aria-pressed="false" aria-label="التبديل إلى الوضع الفاتح" title="فاتح / داكن">
+  <svg class="sun" viewBox="0 0 512 512" aria-hidden="true">
+    <circle cx="256" cy="256" r="74"/>
+    <path class="ray" d="M256 52L256 128"/>
+    <path class="ray" d="M256 384L256 460"/>
+    <path class="ray" d="M52 256L128 256"/>
+    <path class="ray" d="M384 256L460 256"/>
+    <path class="ray" d="M111 111L164 164"/>
+    <path class="ray" d="M348 348L401 401"/>
+    <path class="ray" d="M401 111L348 164"/>
+    <path class="ray" d="M164 348L111 401"/>
+  </svg>
+  <svg class="moon" viewBox="0 0 512 512" aria-hidden="true">
+    <path fill="none" stroke="currentColor" stroke-width="36" d="M256 66A190 190 0 1 0 256 446A190 190 0 1 0 256 66Z"/>
+    <path d="M256 66A190 190 0 0 1 256 446Z"/>
+  </svg>
+</button>
 
 <div class="wrap">
 
@@ -373,7 +472,7 @@ dialog .hint{margin:0 0 14px;color:var(--muted);font-size:.82rem;font-weight:600
   <footer>
     <span class="brand">محلات أبو بشار للملابس والأحذية</span><br>
     جميع الحقوق محفوظة © 2026<br>
-    <span class="ver">الإصدار 2.0</span>
+    <span class="ver">الإصدار 2.1</span>
   </footer>
 </div>
 
@@ -481,18 +580,62 @@ const LINKS = [
 /* ═══════════ نهاية منطقة التعديل — لا تعدّل ما يلي إلّا إذا كنت مطوّرًا ═══════════ */
 
 /* أيقونات المنصات (FontAwesome 6 — مسارات رسمية) */
-const ICONS = {"whatsapp": "M381 351Q315 415 224 416Q162 415 112 386Q62 356 32 306Q3 256 2 194Q2 134 31 83L0 -32L118 -1Q167 -28 224 -28Q286 -27 336 2Q387 32 417 82Q447 132 448 194Q448 239 430 279Q413 319 381 351ZM224 9Q173 10 130 35L123 39L53 21L72 89L68 96Q40 141 39 194Q41 272 94 324Q146 377 224 378Q300 378 354 324Q409 270 411 194Q408 116 355 63Q302 11 224 9ZM325 147Q320 150 306 157Q292 163 287 165Q280 170 275 163Q271 158 266 151Q260 144 257 141Q253 135 245 140Q221 151 203 165Q185 179 170 206Q166 212 173 218Q178 222 186 236Q188 241 185 246Q184 247 181 256Q178 264 174 274Q170 282 168 287Q162 299 157 296Q156 296 156 296Q151 296 145 296Q139 297 130 290Q130 289 129 288Q124 284 118 273Q112 262 111 243Q112 223 121 206Q130 190 133 186Q133 186 134 186Q134 185 135 184Q140 175 165 148Q189 121 228 102Q254 91 268 88Q283 86 295 88Q304 90 316 97Q328 104 332 114Q339 136 336 141Q334 144 328 146Q326 147 325 147Z", "facebook": "M512 192Q511 264 477 321Q443 379 385 413Q328 447 256 448Q184 447 127 413Q69 379 35 321Q1 264 0 192Q2 100 55 33Q109 -34 194 -57V114H141V192H194V226Q193 355 319 353Q332 353 349 351Q365 349 375 347V276Q365 277 345 277Q314 277 300 264Q287 250 287 220V192H371L356 114H287V-62Q384 -48 447 22Q510 92 512 192Z", "instagram": "M224 307Q175 306 143 273Q110 241 109 192Q110 143 143 111Q175 78 224 77Q273 78 305 111Q338 143 339 192Q338 241 305 273Q273 306 224 307ZM224 117Q192 118 171 139Q150 160 149 192Q150 224 171 245Q192 266 224 267Q256 266 277 245Q298 224 299 192Q298 160 277 139Q256 118 224 117ZM371 312Q368 287 344 285Q319 287 317 312Q317 323 325 331Q332 338 344 338Q355 338 363 331Q370 323 371 312ZM447 284Q447 339 410 378Q371 415 317 415Q297 416 260 416Q224 416 188 416Q151 416 132 415Q78 415 38 378Q1 339 2 285Q0 265 0 228Q0 192 0 156Q0 120 2 100Q1 45 38 6Q77 -31 132 -30Q151 -31 188 -32Q224 -32 260 -32Q297 -31 317 -30Q371 -31 410 6Q447 45 447 100Q448 120 448 156Q448 192 448 228Q448 265 447 285ZM399 60Q386 30 356 17Q336 10 302 9Q268 8 240 8Q231 8 224 8Q217 8 208 8Q180 8 146 9Q113 10 92 17Q62 30 49 60Q42 81 41 114Q40 148 40 176Q40 185 40 192Q40 199 40 208Q40 236 41 270Q42 304 49 324Q62 354 92 367Q113 374 146 375Q180 377 208 376Q217 376 224 376Q231 376 240 376Q268 376 302 375Q336 374 356 367Q386 354 399 324Q406 304 407 270Q409 236 408 208Q408 199 408 192Q408 185 408 176Q409 148 407 114Q406 80 399 60Z", "snapchat": "M497 81Q491 94 480 100Q478 101 476 101Q475 102 473 103Q471 104 469 105Q435 123 417 150Q411 158 407 166Q406 171 407 173Q408 175 410 176Q416 180 421 183Q428 187 432 190Q446 200 452 211Q461 229 454 247Q443 272 414 273Q408 273 402 272Q401 272 399 271Q399 288 398 306Q395 336 386 354Q377 373 365 385Q351 401 332 412Q298 431 256 431Q214 431 180 412Q161 401 147 385Q135 372 126 354Q117 336 114 306Q113 288 113 271Q111 271 110 272Q104 273 98 273Q69 272 58 247Q51 229 60 211Q66 200 80 190Q83 188 88 185Q90 184 91 183Q95 180 101 176Q103 175 105 173Q106 171 104 166Q101 158 95 150Q77 124 44 106Q41 104 39 103Q23 97 15 81Q9 65 24 49Q29 43 36 39Q50 31 66 27Q70 26 72 24Q75 22 76 18Q77 15 80 10Q84 4 89 1Q104 -8 122 -7Q139 -7 159 -13Q168 -16 178 -23Q190 -31 209 -39Q228 -46 256 -47Q284 -46 303 -39Q322 -31 334 -23Q334 -23 334 -23Q344 -16 353 -13Q373 -7 389 -7Q390 -7 390 -7Q408 -8 423 0Q429 5 433 12Q435 15 436 18Q437 22 440 24Q442 26 445 27Q461 31 476 39Q483 43 489 49V50Q503 65 497 81ZM463 63Q446 55 434 52Q425 50 418 46Q411 41 411 33Q411 26 407 23Q402 20 388 20Q371 21 344 13Q332 8 320 1Q308 -7 294 -13Q279 -19 256 -20Q234 -19 219 -13Q204 -7 193 1Q181 8 168 13Q141 21 124 20Q110 20 105 23Q101 26 101 33Q101 41 94 46Q87 50 78 52Q66 55 49 63Q40 69 42 72Q44 75 48 77Q103 107 120 137Q137 168 135 174Q136 174 136 174Q138 181 131 188Q123 195 106 205Q99 210 95 212Q79 223 83 237Q88 246 98 246Q101 246 104 245Q115 242 124 239Q130 236 135 235Q136 235 137 235Q142 234 142 240Q142 242 141 244Q139 267 141 303Q143 327 150 342Q157 356 167 367Q172 374 193 388Q215 402 256 404Q297 402 319 388Q340 374 345 367Q355 357 362 342Q369 328 371 303Q372 286 372 269Q371 253 370 242Q370 241 370 241Q370 234 375 235Q376 235 377 235Q382 236 388 239Q397 243 408 245Q411 246 414 246Q424 246 429 237Q433 223 417 212Q413 210 406 206Q389 195 381 188Q374 181 376 174Q376 174 377 174Q375 169 392 138Q409 107 464 77Q468 76 470 72Q472 69 463 63Z", "telegram": "M248 440Q179 439 123 406Q67 373 34 317Q1 261 0 192Q1 123 34 67Q67 11 123 -22Q179 -55 248 -56Q317 -55 373 -22Q429 11 462 67Q495 123 496 192Q495 261 462 317Q429 373 373 406Q317 439 248 440ZM363 271Q361 251 356 217Q351 184 345 150Q339 116 335 93Q329 67 318 68Q302 68 287 80Q283 83 279 86Q262 97 250 106Q238 114 223 123Q208 134 211 141Q213 149 223 157Q226 160 229 163Q230 165 240 173Q256 188 275 207Q295 225 297 230Q298 231 296 234Q293 236 291 235Q287 234 186 165Q171 155 159 156Q152 156 141 159Q130 161 121 165Q118 166 115 166Q94 171 94 181Q95 188 112 195Q221 242 257 257Q307 278 325 284Q344 291 349 291Q354 291 359 288Q362 285 363 281Q363 276 363 271Z", "tiktok": "M448 238Q380 238 325 277V99Q325 47 296 6Q268 -35 220 -54Q171 -71 123 -59Q75 -47 40 -8Q7 31 1 81Q-4 130 20 176Q45 221 89 244Q134 266 185 260V170Q161 177 139 169Q117 162 102 142Q88 122 88 98Q88 75 102 54Q117 35 140 28Q162 20 186 28Q209 36 223 55Q237 74 237 99V448H325Q325 437 327 426Q338 375 381 346Q412 326 448 325Z", "youtube": "M550 324Q538 361 501 373Q477 378 427 381Q377 383 334 384Q291 384 288 384Q285 384 242 384Q199 383 149 381Q99 378 75 373Q38 361 26 324Q21 301 18 271Q16 240 15 216Q15 193 15 192Q15 190 15 167Q16 143 18 113Q21 82 26 59Q38 22 75 11Q99 6 149 3Q199 1 242 0Q285 0 288 0Q288 0 288 0Q291 0 334 0Q377 1 427 3Q477 6 501 11Q538 22 550 59Q555 82 558 113Q560 143 561 167Q561 190 561 192Q561 193 561 216Q560 240 558 271Q555 301 550 324ZM232 110V273V110V273L375 192L232 110Z", "x": "M389 400H460H389H460L306 224L487 -16H345L234 129L107 -16H36L201 172L27 400H172L273 267L389 400ZM364 26H404H364H404L151 360H109L364 26Z", "maps": "M216 -51Q243 -18 282 38Q321 93 352 152Q382 211 384 256Q382 338 328 392Q274 446 192 448Q110 446 56 392Q2 338 0 256Q2 211 32 152Q63 93 102 38Q141 -18 168 -51Q178 -63 192 -63Q206 -63 216 -51ZM192 320Q228 319 247 288Q265 256 247 224Q228 193 192 192Q156 193 137 224Q119 256 137 288Q156 319 192 320Z", "website": "M352 192Q352 159 349 128H163Q160 159 160 192Q160 225 163 256H349Q352 225 352 192ZM381 256H504H381H504Q512 225 512 192Q512 159 504 128H381Q384 159 384 192Q384 225 381 256ZM493 288H377H493H377Q361 386 321 440Q381 423 426 384Q470 344 493 288ZM344 288H168H344H168Q177 343 195 383Q211 418 228 434Q245 449 256 448Q267 449 284 434Q301 418 317 383Q335 343 344 288ZM135 288H19H135H19Q42 344 86 384Q131 423 191 440Q151 386 135 288ZM8 256H131H8H131Q128 225 128 192Q128 159 131 128H8Q0 159 0 192Q0 225 8 256ZM195 1Q177 41 168 96H344Q335 41 317 1Q301 -34 284 -50Q267 -65 256 -64Q245 -65 228 -50Q211 -34 195 1ZM135 96Q151 -2 191 -56Q131 -39 86 0Q42 40 19 96H135ZM493 96Q470 40 426 0Q381 -39 322 -56Q361 -2 377 96H494Z", "check": "M439 343Q448 333 448 320Q448 307 439 297L183 41Q173 32 160 32Q147 32 137 41L9 169Q0 179 0 192Q0 205 9 215Q19 224 32 224Q45 224 55 215L160 109L393 343Q403 352 416 352Q429 352 439 343Z"};
+const ICONS = {"whatsapp": "M381 351Q315 415 224 416Q162 415 112 386Q62 356 32 306Q3 256 2 194Q2 134 31 83L0 -32L118 -1Q167 -28 224 -28Q286 -27 336 2Q387 32 417 82Q447 132 448 194Q448 239 430 279Q413 319 381 351ZM224 9Q173 10 130 35L123 39L53 21L72 89L68 96Q40 141 39 194Q41 272 94 324Q146 377 224 378Q300 378 354 324Q409 270 411 194Q408 116 355 63Q302 11 224 9ZM325 147Q320 150 306 157Q292 163 287 165Q280 170 275 163Q271 158 266 151Q260 144 257 141Q253 135 245 140Q221 151 203 165Q185 179 170 206Q166 212 173 218Q178 222 186 236Q188 241 185 246Q184 247 181 256Q178 264 174 274Q170 282 168 287Q162 299 157 296Q156 296 156 296Q151 296 145 296Q139 297 130 290Q130 289 129 288Q124 284 118 273Q112 262 111 243Q112 223 121 206Q130 190 133 186Q133 186 134 186Q134 185 135 184Q140 175 165 148Q189 121 228 102Q254 91 268 88Q283 86 295 88Q304 90 316 97Q328 104 332 114Q339 136 336 141Q334 144 328 146Q326 147 325 147Z", "facebook": "M512 192Q511 264 477 321Q443 379 385 413Q328 447 256 448Q184 447 127 413Q69 379 35 321Q1 264 0 192Q2 100 55 33Q109 -34 194 -57V114H141V192H194V226Q193 355 319 353Q332 353 349 351Q365 349 375 347V276Q365 277 345 277Q314 277 300 264Q287 250 287 220V192H371L356 114H287V-62Q384 -48 447 22Q510 92 512 192Z", "instagram": "M224 307Q175 306 143 273Q110 241 109 192Q110 143 143 111Q175 78 224 77Q273 78 305 111Q338 143 339 192Q338 241 305 273Q273 306 224 307ZM224 117Q192 118 171 139Q150 160 149 192Q150 224 171 245Q192 266 224 267Q256 266 277 245Q298 224 299 192Q298 160 277 139Q256 118 224 117ZM371 312Q368 287 344 285Q319 287 317 312Q317 323 325 331Q332 338 344 338Q355 338 363 331Q370 323 371 312ZM447 284Q447 339 410 378Q371 415 317 415Q297 416 260 416Q224 416 188 416Q151 416 132 415Q78 415 38 378Q1 339 2 285Q0 265 0 228Q0 192 0 156Q0 120 2 100Q1 45 38 6Q77 -31 132 -30Q151 -31 188 -32Q224 -32 260 -32Q297 -31 317 -30Q371 -31 410 6Q447 45 447 100Q448 120 448 156Q448 192 448 228Q448 265 447 285ZM399 60Q386 30 356 17Q336 10 302 9Q268 8 240 8Q231 8 224 8Q217 8 208 8Q180 8 146 9Q113 10 92 17Q62 30 49 60Q42 81 41 114Q40 148 40 176Q40 185 40 192Q40 199 40 208Q40 236 41 270Q42 304 49 324Q62 354 92 367Q113 374 146 375Q180 377 208 376Q217 376 224 376Q231 376 240 376Q268 376 302 375Q336 374 356 367Q386 354 399 324Q406 304 407 270Q409 236 408 208Q408 199 408 192Q408 185 408 176Q409 148 407 114Q406 80 399 60Z", "snapchat": "M497 81Q491 94 480 100Q478 101 476 101Q475 102 473 103Q471 104 469 105Q435 123 417 150Q411 158 407 166Q406 171 407 173Q408 175 410 176Q416 180 421 183Q428 187 432 190Q446 200 452 211Q461 229 454 247Q443 272 414 273Q408 273 402 272Q401 272 399 271Q399 288 398 306Q395 336 386 354Q377 373 365 385Q351 401 332 412Q298 431 256 431Q214 431 180 412Q161 401 147 385Q135 372 126 354Q117 336 114 306Q113 288 113 271Q111 271 110 272Q104 273 98 273Q69 272 58 247Q51 229 60 211Q66 200 80 190Q83 188 88 185Q90 184 91 183Q95 180 101 176Q103 175 105 173Q106 171 104 166Q101 158 95 150Q77 124 44 106Q41 104 39 103Q23 97 15 81Q9 65 24 49Q29 43 36 39Q50 31 66 27Q70 26 72 24Q75 22 76 18Q77 15 80 10Q84 4 89 1Q104 -8 122 -7Q139 -7 159 -13Q168 -16 178 -23Q190 -31 209 -39Q228 -46 256 -47Q284 -46 303 -39Q322 -31 334 -23Q334 -23 334 -23Q344 -16 353 -13Q373 -7 389 -7Q390 -7 390 -7Q408 -8 423 0Q429 5 433 12Q435 15 436 18Q437 22 440 24Q442 26 445 27Q461 31 476 39Q483 43 489 49V50Q503 65 497 81ZM463 63Q446 55 434 52Q425 50 418 46Q411 41 411 33Q411 26 407 23Q402 20 388 20Q371 21 344 13Q332 8 320 1Q308 -7 294 -13Q279 -19 256 -20Q234 -19 219 -13Q204 -7 193 1Q181 8 168 13Q141 21 124 20Q110 20 105 23Q101 26 101 33Q101 41 94 46Q87 50 78 52Q66 55 49 63Q40 69 42 72Q44 75 48 77Q103 107 120 137Q137 168 135 174Q136 174 136 174Q138 181 131 188Q123 195 106 205Q99 210 95 212Q79 223 83 237Q88 246 98 246Q101 246 104 245Q115 242 124 239Q130 236 135 235Q136 235 137 235Q142 234 142 240Q142 242 141 244Q139 267 141 303Q143 327 150 342Q157 356 167 367Q172 374 193 388Q215 402 256 404Q297 402 319 388Q340 374 345 367Q355 357 362 342Q369 328 371 303Q372 286 372 269Q371 253 370 242Q370 241 370 241Q370 234 375 235Q376 235 377 235Q382 236 388 239Q397 243 408 245Q411 246 414 246Q424 246 429 237Q433 223 417 212Q413 210 406 206Q389 195 381 188Q374 181 376 174Q376 174 377 174Q375 169 392 138Q409 107 464 77Q468 76 470 72Q472 69 463 63Z", "telegram": "M248 440Q179 439 123 406Q67 373 34 317Q1 261 0 192Q1 123 34 67Q67 11 123 -22Q179 -55 248 -56Q317 -55 373 -22Q429 11 462 67Q495 123 496 192Q495 261 462 317Q429 373 373 406Q317 439 248 440ZM363 271Q361 251 356 217Q351 184 345 150Q339 116 335 93Q329 67 318 68Q302 68 287 80Q283 83 279 86Q262 97 250 106Q238 114 223 123Q208 134 211 141Q213 149 223 157Q226 160 229 163Q230 165 240 173Q256 188 275 207Q295 225 297 230Q298 231 296 234Q293 236 291 235Q287 234 186 165Q171 155 159 156Q152 156 141 159Q130 161 121 165Q118 166 115 166Q94 171 94 181Q95 188 112 195Q221 242 257 257Q307 278 325 284Q344 291 349 291Q354 291 359 288Q362 285 363 281Q363 276 363 271Z", "tiktok": "M448 238Q380 238 325 277V99Q325 47 296 6Q268 -35 220 -54Q171 -71 123 -59Q75 -47 40 -8Q7 31 1 81Q-4 130 20 176Q45 221 89 244Q134 266 185 260V170Q161 177 139 169Q117 162 102 142Q88 122 88 98Q88 75 102 54Q117 35 140 28Q162 20 186 28Q209 36 223 55Q237 74 237 99V448H325Q325 437 327 426Q338 375 381 346Q412 326 448 325Z", "youtube": "M550 324Q538 361 501 373Q477 378 427 381Q377 383 334 384Q291 384 288 384Q285 384 242 384Q199 383 149 381Q99 378 75 373Q38 361 26 324Q21 301 18 271Q16 240 15 216Q15 193 15 192Q15 190 15 167Q16 143 18 113Q21 82 26 59Q38 22 75 11Q99 6 149 3Q199 1 242 0Q285 0 288 0Q288 0 288 0Q291 0 334 0Q377 1 427 3Q477 6 501 11Q538 22 550 59Q555 82 558 113Q560 143 561 167Q561 190 561 192Q561 193 561 216Q560 240 558 271Q555 301 550 324ZM232 110V273V110V273L375 192L232 110Z", "x": "M389 400H460H389H460L306 224L487 -16H345L234 129L107 -16H36L201 172L27 400H172L273 267L389 400ZM364 26H404H364H404L151 360H109L364 26Z", "maps": "M216 -51Q243 -18 282 38Q321 93 352 152Q382 211 384 256Q382 338 328 392Q274 446 192 448Q110 446 56 392Q2 338 0 256Q2 211 32 152Q63 93 102 38Q141 -18 168 -51Q178 -63 192 -63Q206 -63 216 -51ZM192 320Q228 319 247 288Q265 256 247 224Q228 193 192 192Q156 193 137 224Q119 256 137 288Q156 319 192 320Z", "website": "M352 192Q352 159 349 128H163Q160 159 160 192Q160 225 163 256H349Q352 225 352 192ZM381 256H504H381H504Q512 225 512 192Q512 159 504 128H381Q384 159 384 192Q384 225 381 256ZM493 288H377H493H377Q361 386 321 440Q381 423 426 384Q470 344 493 288ZM344 288H168H344H168Q177 343 195 383Q211 418 228 434Q245 449 256 448Q267 449 284 434Q301 418 317 383Q335 343 344 288ZM135 288H19H135H19Q42 344 86 384Q131 423 191 440Q151 386 135 288ZM8 256H131H8H131Q128 225 128 192Q128 159 131 128H8Q0 159 0 192Q0 225 8 256ZM195 1Q177 41 168 96H344Q335 41 317 1Q301 -34 284 -50Q267 -65 256 -64Q245 -65 228 -50Q211 -34 195 1ZM135 96Q151 -2 191 -56Q131 -39 86 0Q42 40 19 96H135ZM493 96Q470 40 426 0Q381 -39 322 -56Q361 -2 377 96H494Z", "copy": "M128 128H352A64 64 0 0 1 416 192V416A64 64 0 0 1 352 480H128A64 64 0 0 1 64 416V192A64 64 0 0 1 128 128ZM128 192V416H352V192ZM224 0H416A96 96 0 0 1 512 96V288H448V96H224Z", "star": "M256 32L314.8 187.1L480.4 195.1L351.1 298.9L394.8 458.9L256 368L117.2 458.9L160.9 298.9L31.6 195.1L197.2 187.1Z", "share": "M352 224Q393 225 420 252Q447 279 448 320Q447 361 420 388Q393 415 352 416Q311 415 284 388Q257 361 256 320Q256 314 257 308L163 261Q136 287 96 288Q55 287 28 260Q1 233 0 192Q1 151 28 124Q55 97 96 96Q136 97 163 123L257 76Q256 70 256 64Q257 23 284 -4Q311 -31 352 -32Q393 -31 420 -4Q447 23 448 64Q447 105 420 132Q393 159 352 160Q312 159 285 133L191 180Q192 186 192 192Q192 198 191 204L285 251Q312 225 352 224Z", "check": "M439 343Q448 333 448 320Q448 307 439 297L183 41Q173 32 160 32Q147 32 137 41L9 169Q0 179 0 192Q0 205 9 215Q19 224 32 224Q45 224 55 215L160 109L393 343Q403 352 416 352Q429 352 439 343Z"};
 
 const SVG = (d, cls) => '<svg' + (cls ? ' class="' + cls + '"' : "") + ' viewBox="0 0 512 512" aria-hidden="true"><path d="' + d + '"/></svg>';
 const CHEV_SVG = '<svg class="chev" viewBox="0 0 512 512" aria-hidden="true"><path d="M330 44 L170 256 L330 468"/></svg>';
 
+/* ═══════════ v2.1: المفضلة، تطبيع البحث، روابط مباشرة للبطاقات ═══════════ */
+
+/* تطبيع نص البحث (حروف عربية متقاربة + تشكيل) */
+function normAr(s) {
+  return String(s).toLowerCase()
+    .replace(/[\u064B-\u065F\u0640\u0670]/g, "")   /* تشكيل وطول */
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ئ/g, "ي")
+    .replace(/ؤ/g, "و")
+    .replace(/ة/g, "ه");
+}
+/* أسماء واختصارات شائعة لكل منصة (عربي + إنجليزي) */
+const AR_ALIASES = {
+  whatsapp:  ["واتساب", "whatsapp", "wa"],
+  facebook:  ["فيسبوك", "فيس بوك", "facebook", "fb"],
+  instagram: ["انستغرام", "انستقرام", "انستا", "instagram", "ig"],
+  snapchat:  ["سناب", "سناب شات", "snapchat", "snap"],
+  telegram:  ["تيليجرام", "telegram"],
+  tiktok:    ["تيك توك", "تيك", "tiktok"],
+  youtube:   ["يوتيوب", "youtube"],
+  x:         ["اكس", "منصة اكس"],
+  maps:      ["خرائط", "خرائط جوجل", "جوجل", "maps", "موقع المحل"],
+  website:   ["موقع", "website"]
+};
+
+/* ─── المفضلة (الروابط الأكثر استخدامًا) — تُحفظ في متصفح الزائر ─── */
+const FAVS_KEY = "abb-favs";
+function loadFavs() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(FAVS_KEY) || "[]");
+    return Array.isArray(raw)
+      ? raw.filter(function (id) { return LINKS.some(function (l) { return l.platform === id; }); })
+      : [];
+  } catch (e) { return []; }
+}
+function saveFavs() {
+  try { localStorage.setItem(FAVS_KEY, JSON.stringify(favs)); } catch (e) {}
+}
+let favs = loadFavs();
+
 /* ─── بناء بطاقة رابط ─── */
 function buildCard(item, i) {
   const icon = ICONS[item.platform] || ICONS.website;
+  const isFav = favs.indexOf(item.platform) !== -1;
   const card = document.createElement("article");
   card.className = "card" + (item.featured ? " featured" : "");
+  card.id = "link-" + item.platform;             /* v2.1: رابط مباشر #platform */
+  card.tabIndex = -1;
   card.dataset.p = item.platform;
-  card.dataset.search = [item.title, item.sub, item.platform, item.tag || ""].join(" ").toLowerCase();
+  card.dataset.search = normAr([item.title, item.sub, item.platform, item.tag || "", (AR_ALIASES[item.platform] || []).join(" ")].join(" "));
   card.style.setProperty("--i", i);
 
   const hit = document.createElement("a");
@@ -501,6 +644,21 @@ function buildCard(item, i) {
   hit.target = "_blank";
   hit.rel = "noopener noreferrer";
   hit.setAttribute("aria-label", item.title + " — " + item.sub);
+
+  const fav = document.createElement("button");
+  fav.type = "button";
+  fav.className = "fav-one";
+  fav.dataset.fav = item.platform;
+  fav.setAttribute("aria-pressed", isFav ? "true" : "false");
+  fav.setAttribute("aria-label", isFav ? "إزالة " + item.title + " من المفضلة" : "إضافة " + item.title + " إلى المفضلة");
+  fav.innerHTML = SVG(ICONS.star);
+
+  const share1 = document.createElement("button");
+  share1.type = "button";
+  share1.className = "share-one";
+  share1.dataset.share = item.platform;
+  share1.setAttribute("aria-label", "مشاركة بطاقة " + item.title);
+  share1.innerHTML = SVG(ICONS.share);
 
   const copy = document.createElement("button");
   copy.type = "button";
@@ -516,6 +674,8 @@ function buildCard(item, i) {
       '<span class="t">' + item.title + (item.tag ? ' <span class="tag">' + item.tag + "</span>" : "") + "</span>" +
       '<span class="s">' + item.sub + "</span>" +
     "</span>";
+  card.appendChild(fav);
+  card.appendChild(share1);
   card.appendChild(copy);
   card.insertAdjacentHTML("beforeend", CHEV_SVG);
   card.appendChild(hit);
@@ -527,8 +687,32 @@ const linksEl = document.getElementById("links");
 function renderLinks() {
   linksEl.textContent = "";
   let order = 0;
+
+  /* v2.1: قسم «المفضلة» أولًا — يظهر فقط عند وجود روابط مفضّلة */
+  if (favs.length) {
+    const favItems = favs
+      .map(function (id) { return LINKS.filter(function (l) { return l.platform === id; })[0]; })
+      .filter(Boolean);
+    if (favItems.length) {
+      const section = document.createElement("section");
+      section.className = "group";
+      section.dataset.group = "favs";
+      const h = document.createElement("h2");
+      h.className = "group-title";
+      h.textContent = "⭐ روابطي الأكثر استخدامًا";
+      const list = document.createElement("div");
+      list.className = "cards";
+      favItems.forEach(function (item) { list.appendChild(buildCard(item, order++)); });
+      section.appendChild(h);
+      section.appendChild(list);
+      linksEl.appendChild(section);
+    }
+  }
+
   GROUPS.forEach(function (g) {
-    const items = LINKS.filter(function (l) { return (l.group || "social") === g.id; });
+    const items = LINKS.filter(function (l) {
+      return (l.group || "social") === g.id && favs.indexOf(l.platform) === -1;
+    });
     if (!items.length) return;                       /* لا نُظهر مجموعة فارغة */
     const section = document.createElement("section");
     section.className = "group";
@@ -581,8 +765,44 @@ document.getElementById("copyBtn").addEventListener("click", async function () {
   toast("تم نسخ رابط الصفحة");
 });
 
-/* نسخ رابط منصة واحدة من بطاقتها */
+/* أزرار البطاقات: مفضلة / مشاركة / نسخ (v2.1) */
 linksEl.addEventListener("click", async function (e) {
+  const favBtn = e.target.closest(".fav-one");
+  if (favBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const id = favBtn.dataset.fav;
+    const idx = favs.indexOf(id);
+    const item = LINKS.filter(function (l) { return l.platform === id; })[0];
+    if (idx === -1) favs.push(id); else favs.splice(idx, 1);
+    saveFavs();
+    renderLinks();
+    applyFilter();
+    const name = item ? item.title : id;
+    toast(idx === -1 ? "أُضيفت " + name + " إلى المفضلة" : "أُزيلت " + name + " من المفضلة");
+    return;
+  }
+  const shBtn = e.target.closest(".share-one");
+  if (shBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const platform = shBtn.dataset.share;
+    const item = LINKS.filter(function (l) { return l.platform === platform; })[0];
+    const url = SITE_URL + "#" + platform;            /* رابط مباشر إلى البطاقة */
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: item ? item.title : SHARE_TITLE,
+          text: item ? item.sub : SHARE_TEXT,
+          url: url
+        });
+      } catch (err) { /* أُلغيت المشاركة */ }
+    } else {
+      await copyText(url);
+      toast("تم نسخ رابط هذه البطاقة — الصقه وأرسله");
+    }
+    return;
+  }
   const btn = e.target.closest(".copy-one");
   if (!btn) return;
   e.preventDefault();
@@ -619,7 +839,7 @@ const statusEl = document.getElementById("filterStatus");
 const noResEl = document.getElementById("noResults");
 
 function applyFilter() {
-  const q = searchEl.value.trim().toLowerCase();
+  const q = normAr(searchEl.value.trim());            /* v2.1: تطبيع الحروف العربية */
   let shown = 0;
   linksEl.querySelectorAll(".group").forEach(function (sec) {
     let visible = 0;
@@ -672,6 +892,44 @@ qrDialog.addEventListener("click", function (e) {
 document.getElementById("printBtn").addEventListener("click", function () {
   window.print();
 });
+
+/* ─── v2.1: تبديل الثيم (فاتح/داكن) ─── */
+const themeBtn = document.getElementById("themeBtn");
+function currentTheme() {
+  return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
+}
+function syncThemeUI() {
+  const t = currentTheme();
+  themeBtn.setAttribute("aria-pressed", t === "light" ? "true" : "false");
+  themeBtn.setAttribute("aria-label", t === "light" ? "التبديل إلى الوضع الداكن" : "التبديل إلى الوضع الفاتح");
+  const m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute("content", t === "light" ? "#f7f2e4" : "#0a0a0f");
+}
+themeBtn.addEventListener("click", function () {
+  const next = currentTheme() === "light" ? "dark" : "light";
+  document.documentElement.setAttribute("data-theme", next);
+  try { localStorage.setItem("abb-theme", next); } catch (e) {}
+  syncThemeUI();
+});
+syncThemeUI();
+
+/* ─── v2.1: القفز المباشر إلى بطاقة عبر رابط (#platform) ─── */
+function jumpToCard() {
+  let raw = "";
+  try { raw = decodeURIComponent(location.hash.replace(/^#/, "")); } catch (e) { raw = ""; }
+  if (!raw) return;
+  const el = document.getElementById("link-" + raw);
+  if (!el) return;
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+  el.classList.remove("flash");
+  void el.offsetWidth; /* إعادة تشغيل حركة الإبراز */
+  el.classList.add("flash");
+  try { el.focus({ preventScroll: true }); } catch (e) {}
+  setTimeout(function () { el.classList.remove("flash"); }, 3500);
+}
+window.addEventListener("hashchange", jumpToCard);
+if (location.hash) setTimeout(jumpToCard, 60);
 </script>
 </body>
 </html>
