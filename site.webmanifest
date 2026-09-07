@@ -2,12 +2,15 @@
   "name": "محلات أبو بشار للملابس والأحذية",
   "short_name": "أبو بشار",
   "description": "صفحة روابط محلات أبو بشار على منصات التواصل",
+  "id": ".",
   "start_url": ".",
+  "scope": ".",
   "display": "standalone",
   "background_color": "#0a0a0f",
   "theme_color": "#0a0a0f",
   "lang": "ar",
   "dir": "rtl",
+  "categories": ["shopping", "business", "lifestyle"],
   "icons": [
     {
       "src": "favicon.svg",

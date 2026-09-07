@@ -61,229 +61,245 @@
 <style>
 /* ═════════════════════════ الأساسيات ═════════════════════════ */
 :root{
-  --bg-0:#07070b;
-  --bg-1:#0d0d13;
-  --card:#101017;
-  --gold:#d4af37;
-  --gold-light:#f3d97b;
-  --gold-pale:#f8ecb8;
-  --gold-deep:#8a6d2a;
-  --ink:#f2ecdc;
-  --muted:#b3aa92;
-  --line:rgba(212,175,55,.22);
-  --wa:#25d366;
-  --fb:#1877f2;
-  --ig:#e1306c;
-  --snap:#fffc00;
-  --radius:18px;
+  --bg:#08080d; --bg2:#101018;
+  --ink:#f6f3ea; --muted:#b4aa90;
+  --gold:#d4af37; --gold-lt:#fae391; --gold-dk:#8a6d2a;
+  --line:rgba(212,175,55,.20); --line-2:rgba(212,175,55,.42);
+  --card:rgba(255,255,255,.03); --card-h:rgba(212,175,55,.10);
+  --r:18px; --rs:12px;
+  --shadow:0 18px 40px rgba(0,0,0,.5);
+  --gap:12px;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
 body{
-  font-family:'Cairo','Segoe UI',Tahoma,Arial,sans-serif;
+  margin:0; min-height:100dvh; color:var(--ink);
+  font-family:"Cairo","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
   background:
-    radial-gradient(1100px 500px at 50% -140px, rgba(212,175,55,.16), transparent 62%),
-    radial-gradient(900px 480px at 88% 108%, rgba(212,175,55,.07), transparent 60%),
-    radial-gradient(700px 420px at 8% 100%, rgba(212,175,55,.05), transparent 55%),
-    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 55%, var(--bg-0) 100%);
-  color:var(--ink);
-  min-height:100vh;
-  min-height:100dvh;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-  position:relative;
+    radial-gradient(900px 480px at 50% -12%, rgba(212,175,55,.16), transparent 62%),
+    radial-gradient(700px 520px at 108% 104%, rgba(212,175,55,.08), transparent 60%),
+    linear-gradient(180deg,var(--bg),var(--bg2) 60%,var(--bg));
+  background-attachment:fixed;
+  line-height:1.65; overflow-x:hidden;
 }
-/* حبيبات ذهبية عائمة خفيفة */
-.spark{position:fixed;border-radius:50%;background:radial-gradient(circle,rgba(243,217,123,.85),rgba(212,175,55,0) 70%);filter:blur(1px);pointer-events:none;z-index:0;opacity:.5;animation:float 9s ease-in-out infinite}
-.spark.s1{width:6px;height:6px;top:18%;right:12%}
-.spark.s2{width:4px;height:4px;top:64%;left:10%;animation-delay:2.4s}
-.spark.s3{width:5px;height:5px;top:38%;left:16%;animation-delay:4.8s}
-.spark.s4{width:3px;height:3px;top:80%;right:22%;animation-delay:1.2s}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--gold-lt);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;inset-inline-start:-9999px;top:0;background:var(--gold);color:#1a1405;padding:10px 16px;border-radius:0 0 12px 0;font-weight:800;z-index:99}
+.skip:focus{inset-inline-start:0}
 
-.wrap{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:34px 20px 44px}
+/* بريق الخلفية */
+.sparks{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.spark{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gold-lt);opacity:.0;filter:blur(.4px);animation:float 9s ease-in-out infinite}
+.spark.s1{inset-inline-start:12%;top:22%;animation-delay:.2s}
+.spark.s2{inset-inline-start:82%;top:34%;animation-delay:1.6s}
+.spark.s3{inset-inline-start:24%;top:72%;animation-delay:3.1s}
+.spark.s4{inset-inline-start:70%;top:82%;animation-delay:4.4s}
+@keyframes float{0%,100%{opacity:0;transform:translateY(0) scale(.7)}45%{opacity:.75;transform:translateY(-26px) scale(1.15)}}
+
+.wrap{position:relative;z-index:1;max-width:540px;margin:0 auto;padding:30px 18px 46px;padding-bottom:calc(46px + env(safe-area-inset-bottom,0px))}
 
 /* ═════════════════════════ الترويسة ═════════════════════════ */
-header{text-align:center;margin-bottom:30px;animation:rise .7s both}
-.emblem{width:112px;height:112px;margin:0 auto 6px;filter:drop-shadow(0 6px 22px rgba(212,175,55,.35));animation:glowPulse 5s ease-in-out infinite}
-@keyframes glowPulse{0%,100%{filter:drop-shadow(0 6px 18px rgba(212,175,55,.28))}50%{filter:drop-shadow(0 8px 30px rgba(212,175,55,.5))}}
+header{text-align:center;margin-bottom:22px}
+.emblem{width:104px;height:104px;margin:0 auto 14px;filter:drop-shadow(0 10px 26px rgba(212,175,55,.32));animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.emblem svg{width:100%;height:100%}
 h1{
-  font-family:'Amiri','Cairo',serif;
-  font-size:clamp(1.65rem,6.2vw,2.35rem);
-  font-weight:700;line-height:1.55;
-  background:linear-gradient(180deg,var(--gold-pale) 4%,var(--gold-light) 34%,var(--gold) 62%,var(--gold-deep) 100%);
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;
-  text-shadow:0 2px 26px rgba(212,175,55,.18);
+  font-family:"Amiri",serif;font-size:clamp(1.5rem,6.4vw,2.05rem);line-height:1.35;margin:0 0 6px;
+  background:linear-gradient(180deg,#fff8e2,var(--gold-lt) 42%,var(--gold) 78%,#9a7424);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:rise .7s .06s cubic-bezier(.2,.8,.2,1) both;
 }
-.tagline{color:var(--muted);font-size:clamp(.95rem,3.6vw,1.08rem);font-weight:600;margin-top:4px;letter-spacing:.2px}
-.orn{display:flex;align-items:center;justify-content:center;gap:12px;margin:16px auto 0;width:min(240px,70%)}
-.orn::before,.orn::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--gold));}
-.orn::after{background:linear-gradient(90deg,var(--gold),transparent)}
-.orn i{width:9px;height:9px;border:1.6px solid var(--gold);transform:rotate(45deg);display:block;box-shadow:0 0 10px rgba(212,175,55,.5)}
+.tagline{margin:0;color:var(--muted);font-size:.95rem;font-weight:600;animation:rise .7s .12s cubic-bezier(.2,.8,.2,1) both}
+.handles{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:12px 0 0;animation:rise .7s .16s cubic-bezier(.2,.8,.2,1) both}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;font-size:.76rem;font-weight:700;color:var(--gold-lt);
+  background:rgba(212,175,55,.09);border:1px solid var(--line);padding:5px 11px;border-radius:999px;
+  direction:ltr;unicode-bidi:isolate;
+}
+.chip svg{width:12px;height:12px;fill:var(--gold)}
+.orn{display:flex;align-items:center;justify-content:center;gap:10px;margin:16px auto 0;max-width:280px}
+.orn::before,.orn::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line-2),transparent)}
+.orn i{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);border-radius:2px;box-shadow:0 0 12px rgba(212,175,55,.7)}
 
-/* ═════════════════════════ أزرار المنصات ═════════════════════════ */
-#links{display:flex;flex-direction:column;gap:14px}
-.btn{
-  --ac:var(--gold);
-  position:relative;display:flex;align-items:center;gap:14px;
-  padding:15px 16px;border-radius:var(--radius);
-  background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,0) 46%),var(--card);
-  border:1px solid var(--line);
-  text-decoration:none;color:var(--ink);
-  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-  overflow:hidden;
-  animation:rise .6s both;animation-delay:calc(var(--i,0)*90ms + 120ms);
+/* ═════════════════════════ البحث ═════════════════════════ */
+.finder{position:relative;margin:0 0 14px;animation:rise .7s .2s cubic-bezier(.2,.8,.2,1) both}
+.finder svg.mag{position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;fill:var(--muted);pointer-events:none}
+#search{
+  width:100%;padding:13px 44px 13px 44px;border-radius:999px;color:var(--ink);font-size:.92rem;font-weight:600;
+  background:var(--card);border:1px solid var(--line);appearance:none;transition:.25s;
 }
-.btn::after{ /* لمعة عند المرور */
-  content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;
-  background:linear-gradient(105deg,transparent,rgba(255,255,255,.07),transparent);
-  transform:skewX(-18deg);transition:left .55s ease;
+#search::placeholder{color:#8d846f;font-weight:600}
+#search:focus{border-color:var(--line-2);background:var(--card-h);outline:none;box-shadow:0 0 0 4px rgba(212,175,55,.10)}
+.clear{
+  position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:rgba(212,175,55,.12);
+  color:var(--gold-lt);font-size:1rem;line-height:1;cursor:pointer;display:grid;place-items:center;
 }
-.btn:hover{transform:translateY(-3px);border-color:rgba(212,175,55,.55);box-shadow:0 14px 34px rgba(0,0,0,.45),0 6px 26px rgba(212,175,55,.13)}
-.btn:hover::after{left:120%}
-.btn:active{transform:translateY(-1px) scale(.985)}
+.clear[hidden]{display:none}
+.finder-status{margin:8px 2px 0;font-size:.78rem;color:var(--muted);font-weight:600;min-height:1.1em}
+
+/* ═════════════════════════ المجموعات والبطاقات ═════════════════════════ */
+.group{margin-bottom:20px}
+.group-title{
+  font-size:.82rem;font-weight:800;letter-spacing:.02em;color:var(--gold);
+  margin:0 0 10px 2px;display:flex;align-items:center;gap:9px;
+}
+.group-title::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent)}
+.group.hidden,.card.hidden{display:none}
+.cards{display:flex;flex-direction:column;gap:var(--gap)}
+
+.card{
+  position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;
+  align-items:center;gap:12px;padding:13px 14px;border-radius:var(--r);
+  background:linear-gradient(135deg,var(--card),rgba(212,175,55,.03));
+  border:1px solid var(--line);box-shadow:var(--shadow);
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .22s,background .22s,box-shadow .22s;
+  animation:rise .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 55ms);
+}
+.card-hit{position:absolute;inset:0;z-index:2;border-radius:var(--r)}
+.card-hit::after{content:"";position:absolute;inset:0;border-radius:var(--r)}
+.card:hover{transform:translateY(-3px);border-color:var(--line-2);background:linear-gradient(135deg,var(--card-h),rgba(212,175,55,.05));box-shadow:0 22px 46px rgba(0,0,0,.55),0 0 0 1px rgba(212,175,55,.14) inset}
+.card:active{transform:translateY(-1px) scale(.995)}
+.card.featured{
+  border-color:rgba(212,175,55,.6);
+  background:linear-gradient(135deg,rgba(212,175,55,.20),rgba(212,175,55,.05) 55%,rgba(255,255,255,.02));
+  box-shadow:0 20px 46px rgba(0,0,0,.55),0 0 26px rgba(212,175,55,.16);
+}
+.card.featured .badge{background:linear-gradient(160deg,#f7e6a8,var(--gold) 55%,#9a7424);box-shadow:0 6px 18px rgba(212,175,55,.4)}
+.card.featured .badge svg{fill:#1a1405}
 .badge{
-  flex:0 0 54px;width:54px;height:54px;border-radius:15px;
-  display:grid;place-items:center;
-  background:rgba(212,175,55,.10);
-  border:1px solid rgba(212,175,55,.35);
-  transition:transform .25s ease;
+  width:44px;height:44px;flex:0 0 44px;border-radius:14px;display:grid;place-items:center;
+  background:rgba(212,175,55,.13);border:1px solid var(--line);transition:.22s;
 }
-.btn:hover .badge{transform:scale(1.07) rotate(-3deg)}
-.badge svg{width:27px;height:27px;fill:var(--ac)}
-.txt{flex:1;min-width:0}
-.txt .t{display:flex;align-items:center;gap:8px;font-size:1.06rem;font-weight:800;letter-spacing:.2px}
-.txt .s{color:var(--muted);font-size:.82rem;font-weight:600;line-height:1.55;margin-top:2px;overflow:hidden;text-overflow:ellipsis}
-.tag{font-size:.62rem;font-weight:800;color:#0b0b0b;background:linear-gradient(120deg,var(--gold-light),var(--gold));padding:2.5px 8px;border-radius:99px;white-space:nowrap}
-.chev{flex:0 0 auto;width:20px;height:20px;fill:none;stroke:var(--gold-deep);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:.75;transition:transform .25s ease,opacity .25s ease}
-.btn:hover .chev{transform:translateX(-5px);opacity:1}
+.badge svg{width:21px;height:21px;fill:var(--gold-lt);transition:.22s}
+.card:hover .badge{transform:scale(1.05) rotate(-3deg)}
+.txt{min-width:0;display:flex;flex-direction:column;gap:1px}
+.t{font-weight:800;font-size:.98rem;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.tag{
+  font-size:.63rem;font-weight:800;color:#1a1405;background:linear-gradient(135deg,var(--gold-lt),var(--gold));
+  padding:2px 8px;border-radius:999px;letter-spacing:.01em;
+}
+.s{color:var(--muted);font-size:.79rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.copy-one{
+  width:34px;height:34px;flex:0 0 34px;border-radius:11px;cursor:pointer;position:relative;z-index:3;
+  border:1px solid var(--line);background:rgba(255,255,255,.03);display:grid;place-items:center;transition:.2s;
+}
+.copy-one svg{width:15px;height:15px;fill:var(--muted);transition:.2s}
+.copy-one:hover{background:rgba(212,175,55,.18);border-color:var(--line-2)}
+.copy-one:hover svg{fill:var(--gold-lt)}
+.chev{width:13px;height:13px;fill:none;stroke:var(--gold);stroke-width:52;stroke-linecap:round;stroke-linejoin:round;opacity:.75;transform:scaleX(-1);transition:.22s}
+.card:hover .chev{opacity:1;transform:scaleX(-1) translateX(-4px)}
 
-/* الزر المميز (واتساب) */
-.btn.featured{
-  padding:19px 18px;border-radius:22px;
-  border:1px solid transparent;
-  background:
-    linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,0) 48%),var(--card);
-  box-shadow:0 0 0 1px var(--line), 0 10px 40px rgba(0,0,0,.5), 0 6px 30px rgba(212,175,55,.08);
+.no-results{
+  display:none;text-align:center;padding:22px 14px;border-radius:var(--r);
+  border:1px dashed var(--line);color:var(--muted);font-weight:700;font-size:.9rem;background:var(--card);
 }
-.btn.featured::before{ /* إطار ذهبي متدرج */
-  content:"";position:absolute;inset:0;border-radius:22px;padding:1.5px;
-  background:linear-gradient(135deg,var(--gold-pale),var(--gold-deep) 45%,var(--gold-light));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
-}
-.btn.featured .badge{flex-basis:64px;width:64px;height:64px;border-radius:18px;background:var(--ac);border:none;box-shadow:0 6px 20px rgba(37,211,102,.35)}
-.btn.featured .badge svg{width:32px;height:32px;fill:#fff}
-.btn.featured .txt .t{font-size:1.14rem}
-.btn.featured .txt .s{font-size:.86rem}
-
-/* ألوان المنصات */
-.btn[data-p="whatsapp"]{--ac:var(--wa)}
-.btn[data-p="facebook"]{--ac:var(--fb)}
-.btn[data-p="instagram"]{--ac:var(--ig)}
-.btn[data-p="instagram"] .badge{background:radial-gradient(circle at 30% 110%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%);border:none}
-.btn[data-p="instagram"] .badge svg{fill:#fff}
-.btn[data-p="snapchat"]{--ac:var(--snap)}
-.btn[data-p="snapchat"] .badge{background:var(--snap);border:none}
-.btn[data-p="snapchat"] .badge svg{fill:#141414}
-.btn[data-p="telegram"]{--ac:#26a5e4}
-.btn[data-p="tiktok"]{--ac:#e8e8e8}
-.btn[data-p="youtube"]{--ac:#ff0000}
-.btn[data-p="x"]{--ac:#e8e8e8}
-.btn[data-p="maps"]{--ac:#ea4335}
-.btn[data-p="website"]{--ac:var(--gold)}
+.no-results.show{display:block}
 
 /* ═════════════════════════ أدوات الصفحة ═════════════════════════ */
-.tools-head{display:flex;align-items:center;gap:14px;margin:30px 0 14px;color:var(--muted);font-size:.82rem;font-weight:700;letter-spacing:.5px}
-.tools-head::before,.tools-head::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--line),transparent)}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.tool{
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  padding:14px 8px 12px;border-radius:16px;cursor:pointer;
-  background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,0) 50%),var(--card);
-  border:1px solid var(--line);color:var(--ink);font-family:inherit;
-  font-size:.8rem;font-weight:700;
-  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-  animation:rise .6s both;animation-delay:calc(var(--i,0)*90ms + 420ms);
+.tools-head{
+  font-size:.78rem;font-weight:800;color:var(--gold);margin:26px 2px 10px;
+  display:flex;align-items:center;gap:9px;
 }
-.tool svg{width:22px;height:22px;fill:var(--gold);transition:transform .25s ease}
-.tool:hover{transform:translateY(-3px);border-color:rgba(212,175,55,.5);box-shadow:0 10px 26px rgba(0,0,0,.4)}
-.tool:hover svg{transform:scale(1.12)}
-.tool:active{transform:scale(.96)}
+.tools-head::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--line),transparent)}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tool{
+  display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 10px;cursor:pointer;
+  border-radius:var(--rs);border:1px solid var(--line);background:var(--card);color:var(--ink);
+  font-size:.85rem;font-weight:700;transition:.22s;
+  animation:rise .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0) * 55ms + .12s);
+}
+.tool svg{width:17px;height:17px;fill:var(--gold)}
+.tool:hover{background:rgba(212,175,55,.13);border-color:var(--line-2);transform:translateY(-2px)}
+.tool:active{transform:translateY(0) scale(.99)}
+.tool.wa{border-color:rgba(37,211,102,.4);background:rgba(37,211,102,.10)}
+.tool.wa svg{fill:#25d366}
+.tool.wa:hover{background:rgba(37,211,102,.18)}
+
+/* ═════════════════════════ التذييل ═════════════════════════ */
+footer{text-align:center;margin-top:32px;color:#8b8371;font-size:.78rem;font-weight:600;line-height:1.9}
+footer .brand{color:var(--gold);font-weight:800}
+.ver{display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:3px 11px;border-radius:999px;
+  border:1px solid var(--line);background:rgba(212,175,55,.07);color:var(--gold-lt);font-size:.7rem;font-weight:800}
 
 /* ═════════════════════════ نافذة رمز QR ═════════════════════════ */
 dialog{
-  width:min(400px,calc(100vw - 40px));
-  border:none;border-radius:24px;padding:26px 22px 22px;text-align:center;
-  background:linear-gradient(170deg,#14141c,#0c0c12);
-  color:var(--ink);
-  box-shadow:0 30px 90px rgba(0,0,0,.7),0 0 0 1px var(--line);
+  border:1px solid var(--line-2);border-radius:22px;padding:22px 18px;max-width:min(360px,92vw);width:100%;
+  background:linear-gradient(180deg,#14141d,#0c0c12);color:var(--ink);box-shadow:0 30px 70px rgba(0,0,0,.7);
+  text-align:center;
 }
-dialog::backdrop{background:rgba(4,4,7,.72);backdrop-filter:blur(5px)}
-dialog h3{font-family:'Amiri',serif;font-size:1.25rem;color:var(--gold-light);margin-bottom:4px}
-dialog .hint{color:var(--muted);font-size:.82rem;font-weight:600;margin-bottom:16px}
+dialog::backdrop{background:rgba(3,3,6,.74);backdrop-filter:blur(3px)}
+dialog h3{margin:0 0 4px;font-family:"Amiri",serif;font-size:1.25rem;color:var(--gold-lt)}
+dialog .hint{margin:0 0 14px;color:var(--muted);font-size:.82rem;font-weight:600}
 .qr-box{
-  width:min(272px,72vw);aspect-ratio:1;margin:0 auto 6px;padding:12px;
-  background:#fff;border-radius:18px;box-shadow:0 10px 34px rgba(0,0,0,.5),inset 0 0 0 1px rgba(212,175,55,.35);
+  width:210px;height:210px;margin:0 auto 12px;background:#fff;border-radius:16px;padding:12px;
+  border:1px solid var(--line-2);box-shadow:0 0 30px rgba(212,175,55,.2)
 }
-.qr-box svg{display:block;width:100%;height:100%}
-.dl{
-  display:inline-flex;align-items:center;gap:9px;margin-top:12px;
-  padding:11px 20px;border-radius:14px;text-decoration:none;
-  background:linear-gradient(120deg,var(--gold-light),var(--gold) 55%,var(--gold-deep));
-  color:#151207;font-weight:800;font-size:.9rem;
-  box-shadow:0 8px 24px rgba(212,175,55,.28);
-  transition:transform .2s ease,box-shadow .2s ease;
+.qr-box svg{width:100%;height:100%}
+.qr-url{font-size:.7rem;color:var(--muted);word-break:break-all;direction:ltr;margin:0 0 14px;font-weight:600}
+.dialog-actions{display:flex;flex-direction:column;gap:8px}
+.dl,.printq,.closeqr{
+  display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;cursor:pointer;
+  font-size:.86rem;font-weight:700;text-decoration:none;border:1px solid var(--line-2);transition:.2s;
 }
-.dl:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(212,175,55,.4)}
-.dl svg{width:17px;height:17px;fill:#151207}
-.dl:active{transform:scale(.97)}
-.closeqr{
-  display:block;margin:14px auto 0;background:none;border:none;cursor:pointer;
-  color:var(--muted);font-family:inherit;font-size:.82rem;font-weight:700;padding:8px 18px;border-radius:10px;
-}
-.closeqr:hover{color:var(--gold);background:rgba(212,175,55,.08)}
-
-/* ═════════════════════════ التذييل ═════════════════════════ */
-footer{text-align:center;margin-top:38px;color:#8d8570;font-size:.78rem;font-weight:600;line-height:1.9;animation:rise .6s both;animation-delay:.75s}
-footer .brand{color:var(--gold);font-weight:800}
+.dl{background:linear-gradient(135deg,var(--gold-lt),var(--gold));color:#1a1405;border-color:transparent}
+.dl svg{width:16px;height:16px;fill:#1a1405}
+.dl:hover{filter:brightness(1.07)}
+.printq{background:rgba(212,175,55,.12);color:var(--gold-lt)}
+.printq svg{width:16px;height:16px;fill:var(--gold-lt)}
+.printq:hover{background:rgba(212,175,55,.2)}
+.closeqr{background:transparent;color:var(--muted);border-color:var(--line)}
+.closeqr:hover{color:var(--ink);border-color:var(--line-2)}
 
 /* ═════════════════════════ إشعار صغير Toast ═════════════════════════ */
 #toast{
-  position:fixed;bottom:26px;right:50%;transform:translate(50%,80px);
-  background:linear-gradient(120deg,#1a1a22,#101017);
-  border:1px solid rgba(212,175,55,.45);color:var(--gold-pale);
-  padding:11px 22px;border-radius:99px;font-size:.86rem;font-weight:800;
-  box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 20px rgba(212,175,55,.15);
-  opacity:0;transition:transform .35s cubic-bezier(.2,.9,.3,1.4),opacity .35s ease;
-  z-index:60;pointer-events:none;white-space:nowrap;
+  position:fixed;inset-inline:0;bottom:calc(22px + env(safe-area-inset-bottom,0px));margin:0 auto;width:max-content;max-width:88vw;
+  display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:999px;
+  background:linear-gradient(135deg,#1b1b25,#101017);border:1px solid var(--line-2);color:var(--gold-lt);
+  font-size:.84rem;font-weight:700;box-shadow:0 16px 40px rgba(0,0,0,.6);
+  opacity:0;transform:translateY(14px) scale(.96);pointer-events:none;transition:.28s cubic-bezier(.2,.8,.2,1);z-index:50;
 }
-#toast.show{transform:translate(50%,0);opacity:1}
-#toast svg{width:15px;height:15px;fill:var(--gold);vertical-align:-2px;margin-inline-start:6px}
+#toast svg{width:15px;height:15px;fill:var(--gold)}
+#toast.show{opacity:1;transform:translateY(0) scale(1)}
 
-/* ═════════════════════════ حركة عامة ═════════════════════════ */
-@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+/* ═════════════════════════ بطاقة الطباعة ═════════════════════════ */
+#print-card{display:none}
+
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .spark{display:none}
 }
-@media (hover:none){.btn:hover{transform:none}.btn:active{transform:scale(.98)}}
+@media (max-width:360px){
+  .tools{grid-template-columns:1fr}
+  .badge{width:40px;height:40px;flex-basis:40px}
+}
+@media (min-width:600px){
+  .wrap{padding-top:52px}
+}
 
-/* شاشات كبيرة: بطاقتان بصفّ */
-@media(min-width:768px){
-  .wrap{max-width:760px;padding-top:52px}
-  #links{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  .btn.featured{grid-column:1/-1}
+/* ═════════════════════════ الطباعة (بطاقة QR للمحل) ═════════════════════════ */
+@media print{
+  body{background:#fff !important;color:#000 !important}
+  .wrap,.sparks,#toast,dialog{display:none !important}
+  #print-card{
+    display:block !important;position:static;padding:14mm;text-align:center;color:#000;
+    font-family:"Cairo",system-ui,sans-serif;
+  }
+  #print-card .p-title{font-size:24pt;font-weight:900;margin:0 0 4px}
+  #print-card .p-sub{font-size:12pt;margin:0 0 10mm;color:#333}
+  #print-card .p-qr{width:78mm;height:78mm;margin:0 auto 8mm;padding:5mm;border:2px solid #000;border-radius:6mm;background:#fff}
+  #print-card .p-qr svg{width:100%;height:100%}
+  #print-card .p-qr path{fill:#000 !important}
+  #print-card .p-url{font-size:11pt;direction:ltr;word-break:break-all;margin:0 0 3mm;font-weight:700}
+  #print-card .p-note{font-size:10pt;color:#333;margin:0}
 }
-:where(a,button,summary,[tabindex]):focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:12px}
-.skip{position:absolute;right:-9999px}
-.skip:focus{right:12px;top:12px;background:var(--gold);color:#151207;padding:8px 14px;border-radius:10px;z-index:99;font-weight:800}
 </style>
 </head>
-
 <body>
 <a class="skip" href="#links">تخطَّ إلى الروابط</a>
-<span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>
+<div class="sparks" aria-hidden="true"><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span></div>
 
 <div class="wrap">
 
@@ -303,12 +319,25 @@ footer .brand{color:var(--gold);font-weight:800}
     </div>
     <h1>محلات أبو بشار للملابس والأحذية</h1>
     <p class="tagline">تابعنا على جميع منصات التواصل الاجتماعي</p>
+    <div class="handles">
+      <span class="chip"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M224 307Q175 306 143 273Q110 241 109 192Q110 143 143 111Q175 78 224 77Q273 78 305 111Q338 143 339 192Q338 241 305 273Q273 306 224 307ZM224 117Q192 118 171 139Q150 160 149 192Q150 224 171 245Q192 266 224 267Q256 266 277 245Q298 224 299 192Q298 160 277 139Q256 118 224 117ZM371 312Q368 287 344 285Q319 287 317 312Q317 323 325 331Q332 338 344 338Q355 338 363 331Q370 323 371 312ZM447 284Q447 339 410 378Q371 415 317 415Q297 416 260 416Q224 416 188 416Q151 416 132 415Q78 415 38 378Q1 339 2 285Q0 265 0 228Q0 192 0 156Q0 120 2 100Q1 45 38 6Q77 -31 132 -30Q151 -31 188 -32Q224 -32 260 -32Q297 -31 317 -30Q371 -31 410 6Q447 45 447 100Q448 120 448 156Q448 192 448 228Q448 265 447 285ZM399 60Q386 30 356 17Q336 10 302 9Q268 8 240 8Q231 8 224 8Q217 8 208 8Q180 8 146 9Q113 10 92 17Q62 30 49 60Q42 81 41 114Q40 148 40 176Q40 185 40 192Q40 199 40 208Q40 236 41 270Q42 304 49 324Q62 354 92 367Q113 374 146 375Q180 377 208 376Q217 376 224 376Q231 376 240 376Q268 376 302 375Q336 374 356 367Q386 354 399 324Q406 304 407 270Q409 236 408 208Q408 199 408 192Q408 185 408 176Q409 148 407 114Q406 80 399 60Z"/></svg>@bshyr75625</span>
+      <span class="chip"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M497 81Q491 94 480 100Q478 101 476 101Q475 102 473 103Q471 104 469 105Q435 123 417 150Q411 158 407 166Q406 171 407 173Q408 175 410 176Q416 180 421 183Q428 187 432 190Q446 200 452 211Q461 229 454 247Q443 272 414 273Q408 273 402 272Q401 272 399 271Q399 288 398 306Q395 336 386 354Q377 373 365 385Q351 401 332 412Q298 431 256 431Q214 431 180 412Q161 401 147 385Q135 372 126 354Q117 336 114 306Q113 288 113 271Q111 271 110 272Q104 273 98 273Q69 272 58 247Q51 229 60 211Q66 200 80 190Q83 188 88 185Q90 184 91 183Q95 180 101 176Q103 175 105 173Q106 171 104 166Q101 158 95 150Q77 124 44 106Q41 104 39 103Q23 97 15 81Q9 65 24 49Q29 43 36 39Q50 31 66 27Q70 26 72 24Q75 22 76 18Q77 15 80 10Q84 4 89 1Q104 -8 122 -7Q139 -7 159 -13Q168 -16 178 -23Q190 -31 209 -39Q228 -46 256 -47Q284 -46 303 -39Q322 -31 334 -23Q334 -23 334 -23Q344 -16 353 -13Q373 -7 389 -7Q390 -7 390 -7Q408 -8 423 0Q429 5 433 12Q435 15 436 18Q437 22 440 24Q442 26 445 27Q461 31 476 39Q483 43 489 49V50Q503 65 497 81ZM463 63Q446 55 434 52Q425 50 418 46Q411 41 411 33Q411 26 407 23Q402 20 388 20Q371 21 344 13Q332 8 320 1Q308 -7 294 -13Q279 -19 256 -20Q234 -19 219 -13Q204 -7 193 1Q181 8 168 13Q141 21 124 20Q110 20 105 23Q101 26 101 33Q101 41 94 46Q87 50 78 52Q66 55 49 63Q40 69 42 72Q44 75 48 77Q103 107 120 137Q137 168 135 174Q136 174 136 174Q138 181 131 188Q123 195 106 205Q99 210 95 212Q79 223 83 237Q88 246 98 246Q101 246 104 245Q115 242 124 239Q130 236 135 235Q136 235 137 235Q142 234 142 240Q142 242 141 244Q139 267 141 303Q143 327 150 342Q157 356 167 367Q172 374 193 388Q215 402 256 404Q297 402 319 388Q340 374 345 367Q355 357 362 342Q369 328 371 303Q372 286 372 269Q371 253 370 242Q370 241 370 241Q370 234 375 235Q376 235 377 235Q382 236 388 239Q397 243 408 245Q411 246 414 246Q424 246 429 237Q433 223 417 212Q413 210 406 206Q389 195 381 188Q374 181 376 174Q376 174 377 174Q375 169 392 138Q409 107 464 77Q468 76 470 72Q472 69 463 63Z"/></svg>bshyttbt26</span>
+    </div>
     <div class="orn" aria-hidden="true"><i></i></div>
   </header>
+
+  <!-- ═══════════ البحث في الروابط ═══════════ -->
+  <div class="finder">
+    <svg class="mag" viewBox="0 0 512 512" aria-hidden="true"><path d="M344 312Q334 322 324 330L463 469Q472 478 472 492Q472 505 463 515Q453 524 440 524Q426 524 417 515L278 376Q214 424 144 416Q72 410 26 356Q-20 302 -14 230Q-8 158 46 112Q100 66 172 72Q244 78 290 132Q336 186 330 258Q328 286 344 312ZM160 352Q213 352 251 314Q288 277 288 224Q288 171 251 133Q213 96 160 96Q107 96 69 133Q32 171 32 224Q32 277 69 314Q107 352 160 352Z"/></svg>
+    <input id="search" type="search" inputmode="search" autocomplete="off" placeholder="ابحث عن منصة… (مثال: واتساب)" aria-label="ابحث في روابط المنصات" aria-describedby="filterStatus">
+    <button class="clear" id="clearSearch" type="button" aria-label="مسح البحث" hidden>✕</button>
+    <p class="finder-status" id="filterStatus" role="status" aria-live="polite"></p>
+  </div>
 
   <!-- ═══════════ الروابط ═══════════ -->
   <main>
     <nav id="links" aria-label="حسابات متاجرنا على المنصات"></nav>
+    <div class="no-results" id="noResults">لا يوجد رابط مطابق لبحثك — جرّب كلمة أخرى.</div>
     <noscript>
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
         <a style="color:#f3d97b" href="https://whatsapp.com/channel/0029Vb85ukv5a23wwbnPLv46" target="_blank" rel="noopener noreferrer">واتساب — قناة التخفيضات الرسمية</a>
@@ -321,16 +350,20 @@ footer .brand{color:var(--gold);font-weight:800}
     <!-- ═══════════ أدوات الصفحة ═══════════ -->
     <div class="tools-head">أدوات الصفحة</div>
     <div class="tools">
-      <button class="tool" id="shareBtn" style="--i:0" type="button">
+      <button class="tool wa" id="waShareBtn" style="--i:0" type="button">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M381 351Q315 415 224 416Q162 415 112 386Q62 356 32 306Q3 256 2 194Q2 134 31 83L0 -32L118 -1Q167 -28 224 -28Q286 -27 336 2Q387 32 417 82Q447 132 448 194Q448 239 430 279Q413 319 381 351ZM224 9Q173 10 130 35L123 39L53 21L72 89L68 96Q40 141 39 194Q41 272 94 324Q146 377 224 378Q300 378 354 324Q409 270 411 194Q408 116 355 63Q302 11 224 9ZM325 147Q320 150 306 157Q292 163 287 165Q280 170 275 163Q271 158 266 151Q260 144 257 141Q253 135 245 140Q221 151 203 165Q185 179 170 206Q166 212 173 218Q178 222 186 236Q188 241 185 246Q184 247 181 256Q178 264 174 274Q170 282 168 287Q162 299 157 296Q156 296 156 296Q151 296 145 296Q139 297 130 290Q130 289 129 288Q124 284 118 273Q112 262 111 243Q112 223 121 206Q130 190 133 186Q133 186 134 186Q134 185 135 184Q140 175 165 148Q189 121 228 102Q254 91 268 88Q283 86 295 88Q304 90 316 97Q328 104 332 114Q339 136 336 141Q334 144 328 146Q326 147 325 147Z"/></svg>
+        إرسال على واتساب
+      </button>
+      <button class="tool" id="shareBtn" style="--i:1" type="button">
         <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M352 224Q393 225 420 252Q447 279 448 320Q447 361 420 388Q393 415 352 416Q311 415 284 388Q257 361 256 320Q256 314 257 308L163 261Q136 287 96 288Q55 287 28 260Q1 233 0 192Q1 151 28 124Q55 97 96 96Q136 97 163 123L257 76Q256 70 256 64Q257 23 284 -4Q311 -31 352 -32Q393 -31 420 -4Q447 23 448 64Q447 105 420 132Q393 159 352 160Q312 159 285 133L191 180Q192 186 192 192Q192 198 191 204L285 251Q312 225 352 224Z"/></svg>
         مشاركة الصفحة
       </button>
-      <button class="tool" id="copyBtn" style="--i:1" type="button">
-        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M208 448H332H208H332Q352 448 366 434L434 366Q448 352 448 332V112Q447 92 434 78Q420 65 400 64H208Q188 65 174 78Q161 92 160 112V400Q161 420 174 434Q188 447 208 448ZM48 320H128H48H128V256H64V0H256V32H320V-16Q319 -36 306 -50Q292 -63 272 -64H48Q28 -63 14 -50Q1 -36 0 -16V272Q1 292 14 306Q28 319 48 320Z"/></svg>
-        نسخ الرابط
+      <button class="tool" id="copyBtn" style="--i:2" type="button">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M352 224Q393 225 420 252Q447 279 448 320Q447 361 420 388Q393 415 352 416Q311 415 284 388Q257 361 256 320Q256 314 257 308L163 261Q136 287 96 288Q55 287 28 260Q1 233 0 192Q1 151 28 124Q55 97 96 96Q136 97 163 123L257 76Q256 70 256 64Q257 23 284 -4Q311 -31 352 -32Q393 -31 420 -4Q447 23 448 64Q447 105 420 132Q393 159 352 160Q312 159 285 133L191 180Q192 186 192 192Q192 198 191 204L285 251Q312 225 352 224Z"/></svg>
+        نسخ رابط الصفحة
       </button>
-      <button class="tool" id="qrBtn" style="--i:2" type="button">
-        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M0 368Q1 388 14 402Q28 415 48 416H144Q164 415 178 402Q191 388 192 368V272Q191 252 178 238Q164 225 144 224H48Q28 225 14 238Q1 252 0 272V368ZM64 352V288V352V288H128V352H64ZM0 112Q1 132 14 146Q28 159 48 160H144Q164 159 178 146Q191 132 192 112V16Q191 -4 178 -18Q164 -31 144 -32H48Q28 -31 14 -18Q1 -4 0 16V112ZM64 96V32V96V32H128V96H64ZM304 416H400H304H400Q420 415 434 402Q447 388 448 368V272Q447 252 434 238Q420 225 400 224H304Q284 225 270 238Q257 252 256 272V368Q257 388 270 402Q284 415 304 416ZM384 352H320H384H320V288H384V352ZM256 144Q257 159 272 160H336Q351 159 352 144Q353 129 368 128H400Q415 129 416 144Q417 159 432 160Q447 159 448 144V48Q447 33 432 32H368Q353 33 352 48Q351 63 336 64Q321 63 320 48V-16Q319 -31 304 -32H272Q257 -31 256 -16V144ZM368 -32Q353 -31 352 -16Q353 -1 368 0Q383 -1 384 -16Q383 -31 368 -32ZM432 -32Q417 -31 416 -16Q417 -1 432 0Q447 -1 448 -16Q447 -31 432 -32Z"/></svg>
+      <button class="tool" id="qrBtn" style="--i:3" type="button">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M208 448H332H208H332Q352 448 366 434L434 366Q448 352 448 332V112Q447 92 434 78Q420 65 400 64H208Q188 65 174 78Q161 92 160 112V400Q161 420 174 434Q188 447 208 448ZM48 320H128H48H128V256H64V0H256V32H320V-16Q319 -36 306 -50Q292 -63 272 -64H48Q28 -63 14 -50Q1 -36 0 -16V272Q1 292 14 306Q28 319 48 320Z"/></svg>
         رمز QR
       </button>
     </div>
@@ -339,7 +372,8 @@ footer .brand{color:var(--gold);font-weight:800}
   <!-- ═══════════ التذييل ═══════════ -->
   <footer>
     <span class="brand">محلات أبو بشار للملابس والأحذية</span><br>
-    جميع الحقوق محفوظة © 2026
+    جميع الحقوق محفوظة © 2026<br>
+    <span class="ver">الإصدار 2.0</span>
   </footer>
 </div>
 
@@ -347,35 +381,66 @@ footer .brand{color:var(--gold);font-weight:800}
 <dialog id="qrDialog" aria-labelledby="qrTitle">
   <h3 id="qrTitle">رمز الصفحة QR</h3>
   <p class="hint">امسح الرمز بكاميرا الهاتف للوصول إلى صفحة متاجرنا</p>
-  <div class="qr-box"><svg width="100%" height="100%" version="1.1" viewBox="0 0 82 82" xmlns="http://www.w3.org/2000/svg"><path shape-rendering="crispEdges" d="M8,8H10V10H8zM10,8H12V10H10zM12,8H14V10H12zM14,8H16V10H14zM16,8H18V10H16zM18,8H20V10H18zM20,8H22V10H20zM28,8H30V10H28zM30,8H32V10H30zM32,8H34V10H32zM34,8H36V10H34zM36,8H38V10H36zM38,8H40V10H38zM42,8H44V10H42zM44,8H46V10H44zM46,8H48V10H46zM48,8H50V10H48zM52,8H54V10H52zM54,8H56V10H54zM60,8H62V10H60zM62,8H64V10H62zM64,8H66V10H64zM66,8H68V10H66zM68,8H70V10H68zM70,8H72V10H70zM72,8H74V10H72zM8,10H10V12H8zM20,10H22V12H20zM34,10H36V12H34zM36,10H38V12H36zM38,10H40V12H38zM40,10H42V12H40zM44,10H46V12H44zM48,10H50V12H48zM54,10H56V12H54zM56,10H58V12H56zM60,10H62V12H60zM72,10H74V12H72zM8,12H10V14H8zM12,12H14V14H12zM14,12H16V14H14zM16,12H18V14H16zM20,12H22V14H20zM26,12H28V14H26zM28,12H30V14H28zM32,12H34V14H32zM34,12H36V14H34zM38,12H40V14H38zM44,12H46V14H44zM46,12H48V14H46zM56,12H58V14H56zM60,12H62V14H60zM64,12H66V14H64zM66,12H68V14H66zM68,12H70V14H68zM72,12H74V14H72zM8,14H10V16H8zM12,14H14V16H12zM14,14H16V16H14zM16,14H18V16H16zM20,14H22V16H20zM30,14H32V16H30zM34,14H36V16H34zM36,14H38V16H36zM40,14H42V16H40zM42,14H44V16H42zM44,14H46V16H44zM48,14H50V16H48zM54,14H56V16H54zM56,14H58V16H56zM60,14H62V16H60zM64,14H66V16H64zM66,14H68V16H66zM68,14H70V16H68zM72,14H74V16H72zM8,16H10V18H8zM12,16H14V18H12zM14,16H16V18H14zM16,16H18V18H16zM20,16H22V18H20zM28,16H30V18H28zM30,16H32V18H30zM36,16H38V18H36zM42,16H44V18H42zM44,16H46V18H44zM46,16H48V18H46zM48,16H50V18H48zM50,16H52V18H50zM54,16H56V18H54zM56,16H58V18H56zM60,16H62V18H60zM64,16H66V18H64zM66,16H68V18H66zM68,16H70V18H68zM72,16H74V18H72zM8,18H10V20H8zM20,18H22V20H20zM24,18H26V20H24zM26,18H28V20H26zM28,18H30V20H28zM32,18H34V20H32zM34,18H36V20H34zM36,18H38V20H36zM38,18H40V20H38zM40,18H42V20H40zM42,18H44V20H42zM44,18H46V20H44zM46,18H48V20H46zM50,18H52V20H50zM56,18H58V20H56zM60,18H62V20H60zM72,18H74V20H72zM8,20H10V22H8zM10,20H12V22H10zM12,20H14V22H12zM14,20H16V22H14zM16,20H18V22H16zM18,20H20V22H18zM20,20H22V22H20zM24,20H26V22H24zM28,20H30V22H28zM32,20H34V22H32zM36,20H38V22H36zM40,20H42V22H40zM44,20H46V22H44zM48,20H50V22H48zM52,20H54V22H52zM56,20H58V22H56zM60,20H62V22H60zM62,20H64V22H62zM64,20H66V22H64zM66,20H68V22H66zM68,20H70V22H68zM70,20H72V22H70zM72,20H74V22H72zM26,22H28V24H26zM28,22H30V24H28zM32,22H34V24H32zM36,22H38V24H36zM38,22H40V24H38zM40,22H42V24H40zM42,22H44V24H42zM50,22H52V24H50zM52,22H54V24H52zM54,22H56V24H54zM8,24H10V26H8zM14,24H16V26H14zM18,24H20V26H18zM20,24H22V26H20zM24,24H26V26H24zM26,24H28V26H26zM34,24H36V26H34zM36,24H38V26H36zM40,24H42V26H40zM50,24H52V26H50zM58,24H60V26H58zM62,24H64V26H62zM12,26H14V28H12zM16,26H18V28H16zM18,26H20V28H18zM22,26H24V28H22zM24,26H26V28H24zM26,26H28V28H26zM28,26H30V28H28zM30,26H32V28H30zM32,26H34V28H32zM34,26H36V28H34zM42,26H44V28H42zM48,26H50V28H48zM52,26H54V28H52zM56,26H58V28H56zM58,26H60V28H58zM60,26H62V28H60zM62,26H64V28H62zM70,26H72V28H70zM72,26H74V28H72zM8,28H10V30H8zM12,28H14V30H12zM14,28H16V30H14zM16,28H18V30H16zM20,28H22V30H20zM24,28H26V30H24zM28,28H30V30H28zM30,28H32V30H30zM32,28H34V30H32zM34,28H36V30H34zM36,28H38V30H36zM44,28H46V30H44zM46,28H48V30H46zM50,28H52V30H50zM52,28H54V30H52zM56,28H58V30H56zM60,28H62V30H60zM62,28H64V30H62zM64,28H66V30H64zM68,28H70V30H68zM72,28H74V30H72zM18,30H20V32H18zM22,30H24V32H22zM26,30H28V32H26zM28,30H30V32H28zM34,30H36V32H34zM44,30H46V32H44zM46,30H48V32H46zM48,30H50V32H48zM50,30H52V32H50zM52,30H54V32H52zM54,30H56V32H54zM58,30H60V32H58zM64,30H66V32H64zM66,30H68V32H66zM70,30H72V32H70zM10,32H12V34H10zM12,32H14V34H12zM16,32H18V34H16zM18,32H20V34H18zM20,32H22V34H20zM26,32H28V34H26zM30,32H32V34H30zM32,32H34V34H32zM36,32H38V34H36zM40,32H42V34H40zM44,32H46V34H44zM46,32H48V34H46zM48,32H50V34H48zM52,32H54V34H52zM60,32H62V34H60zM62,32H64V34H62zM66,32H68V34H66zM72,32H74V34H72zM8,34H10V36H8zM10,34H12V36H10zM14,34H16V36H14zM22,34H24V36H22zM28,34H30V36H28zM36,34H38V36H36zM38,34H40V36H38zM42,34H44V36H42zM44,34H46V36H44zM48,34H50V36H48zM52,34H54V36H52zM58,34H60V36H58zM60,34H62V36H60zM62,34H64V36H62zM64,34H66V36H64zM66,34H68V36H66zM68,34H70V36H68zM70,34H72V36H70zM72,34H74V36H72zM8,36H10V38H8zM12,36H14V38H12zM16,36H18V38H16zM20,36H22V38H20zM22,36H24V38H22zM34,36H36V38H34zM38,36H40V38H38zM40,36H42V38H40zM46,36H48V38H46zM52,36H54V38H52zM54,36H56V38H54zM56,36H58V38H56zM58,36H60V38H58zM60,36H62V38H60zM62,36H64V38H62zM66,36H68V38H66zM68,36H70V38H68zM70,36H72V38H70zM8,38H10V40H8zM12,38H14V40H12zM16,38H18V40H16zM18,38H20V40H18zM24,38H26V40H24zM26,38H28V40H26zM28,38H30V40H28zM32,38H34V40H32zM34,38H36V40H34zM40,38H42V40H40zM42,38H44V40H42zM44,38H46V40H44zM48,38H50V40H48zM50,38H52V40H50zM52,38H54V40H52zM56,38H58V40H56zM60,38H62V40H60zM70,38H72V40H70zM8,40H10V42H8zM12,40H14V42H12zM14,40H16V42H14zM20,40H22V42H20zM28,40H30V42H28zM30,40H32V42H30zM32,40H34V42H32zM34,40H36V42H34zM38,40H40V42H38zM42,40H44V42H42zM50,40H52V42H50zM52,40H54V42H52zM56,40H58V42H56zM60,40H62V42H60zM64,40H66V42H64zM66,40H68V42H66zM70,40H72V42H70zM8,42H10V44H8zM10,42H12V44H10zM14,42H16V44H14zM26,42H28V44H26zM30,42H32V44H30zM36,42H38V44H36zM40,42H42V44H40zM42,42H44V44H42zM52,42H54V44H52zM54,42H56V44H54zM56,42H58V44H56zM62,42H64V44H62zM66,42H68V44H66zM70,42H72V44H70zM8,44H10V46H8zM10,44H12V46H10zM12,44H14V46H12zM14,44H16V46H14zM18,44H20V46H18zM20,44H22V46H20zM22,44H24V46H22zM24,44H26V46H24zM28,44H30V46H28zM30,44H32V46H30zM34,44H36V46H34zM36,44H38V46H36zM42,44H44V46H42zM50,44H52V46H50zM56,44H58V46H56zM58,44H60V46H58zM60,44H62V46H60zM68,44H70V46H68zM70,44H72V46H70zM72,44H74V46H72zM26,46H28V48H26zM28,46H30V48H28zM30,46H32V48H30zM32,46H34V48H32zM36,46H38V48H36zM38,46H40V48H38zM48,46H50V48H48zM52,46H54V48H52zM54,46H56V48H54zM56,46H58V48H56zM62,46H64V48H62zM70,46H72V48H70zM72,46H74V48H72zM10,48H12V50H10zM12,48H14V50H12zM20,48H22V50H20zM22,48H24V50H22zM24,48H26V50H24zM26,48H28V50H26zM28,48H30V50H28zM30,48H32V50H30zM32,48H34V50H32zM36,48H38V50H36zM42,48H44V50H42zM46,48H48V50H46zM48,48H50V50H48zM54,48H56V50H54zM62,48H64V50H62zM70,48H72V50H70zM72,48H74V50H72zM10,50H12V52H10zM12,50H14V52H12zM14,50H16V52H14zM18,50H20V52H18zM24,50H26V52H24zM26,50H28V52H26zM30,50H32V52H30zM36,50H38V52H36zM38,50H40V52H38zM46,50H48V52H46zM50,50H52V52H50zM60,50H62V52H60zM62,50H64V52H62zM66,50H68V52H66zM68,50H70V52H68zM70,50H72V52H70zM72,50H74V52H72zM8,52H10V54H8zM10,52H12V54H10zM16,52H18V54H16zM18,52H20V54H18zM20,52H22V54H20zM24,52H26V54H24zM28,52H30V54H28zM30,52H32V54H30zM34,52H36V54H34zM40,52H42V54H40zM44,52H46V54H44zM46,52H48V54H46zM52,52H54V54H52zM56,52H58V54H56zM60,52H62V54H60zM62,52H64V54H62zM64,52H66V54H64zM66,52H68V54H66zM68,52H70V54H68zM72,52H74V54H72zM10,54H12V56H10zM16,54H18V56H16zM18,54H20V56H18zM22,54H24V56H22zM34,54H36V56H34zM38,54H40V56H38zM44,54H46V56H44zM46,54H48V56H46zM48,54H50V56H48zM50,54H52V56H50zM58,54H60V56H58zM60,54H62V56H60zM66,54H68V56H66zM70,54H72V56H70zM8,56H10V58H8zM12,56H14V58H12zM20,56H22V58H20zM24,56H26V58H24zM28,56H30V58H28zM32,56H34V58H32zM42,56H44V58H42zM48,56H50V58H48zM50,56H52V58H50zM52,56H54V58H52zM56,56H58V58H56zM58,56H60V58H58zM60,56H62V58H60zM62,56H64V58H62zM64,56H66V58H64zM66,56H68V58H66zM70,56H72V58H70zM24,58H26V60H24zM26,58H28V60H26zM28,58H30V60H28zM30,58H32V60H30zM34,58H36V60H34zM36,58H38V60H36zM42,58H44V60H42zM44,58H46V60H44zM46,58H48V60H46zM48,58H50V60H48zM50,58H52V60H50zM52,58H54V60H52zM56,58H58V60H56zM64,58H66V60H64zM66,58H68V60H66zM72,58H74V60H72zM8,60H10V62H8zM10,60H12V62H10zM12,60H14V62H12zM14,60H16V62H14zM16,60H18V62H16zM18,60H20V62H18zM20,60H22V62H20zM26,60H28V62H26zM28,60H30V62H28zM34,60H36V62H34zM40,60H42V62H40zM42,60H44V62H42zM44,60H46V62H44zM48,60H50V62H48zM52,60H54V62H52zM56,60H58V62H56zM60,60H62V62H60zM64,60H66V62H64zM66,60H68V62H66zM68,60H70V62H68zM8,62H10V64H8zM20,62H22V64H20zM24,62H26V64H24zM26,62H28V64H26zM30,62H32V64H30zM34,62H36V64H34zM38,62H40V64H38zM42,62H44V64H42zM44,62H46V64H44zM50,62H52V64H50zM52,62H54V64H52zM56,62H58V64H56zM64,62H66V64H64zM72,62H74V64H72zM8,64H10V66H8zM12,64H14V66H12zM14,64H16V66H14zM16,64H18V66H16zM20,64H22V66H20zM26,64H28V66H26zM28,64H30V66H28zM32,64H34V66H32zM38,64H40V66H38zM44,64H46V66H44zM46,64H48V66H46zM48,64H50V66H48zM56,64H58V66H56zM58,64H60V66H58zM60,64H62V66H60zM62,64H64V66H62zM64,64H66V66H64zM66,64H68V66H66zM8,66H10V68H8zM12,66H14V68H12zM14,66H16V68H14zM16,66H18V68H16zM20,66H22V68H20zM24,66H26V68H24zM26,66H28V68H26zM38,66H40V68H38zM40,66H42V68H40zM44,66H46V68H44zM46,66H48V68H46zM52,66H54V68H52zM56,66H58V68H56zM60,66H62V68H60zM64,66H66V68H64zM70,66H72V68H70zM8,68H10V70H8zM12,68H14V70H12zM14,68H16V70H14zM16,68H18V70H16zM20,68H22V70H20zM26,68H28V70H26zM34,68H36V70H34zM38,68H40V70H38zM40,68H42V70H40zM46,68H48V70H46zM48,68H50V70H48zM56,68H58V70H56zM64,68H66V70H64zM72,68H74V70H72zM8,70H10V72H8zM20,70H22V72H20zM28,70H30V72H28zM30,70H32V72H30zM34,70H36V72H34zM42,70H44V72H42zM46,70H48V72H46zM48,70H50V72H48zM50,70H52V72H50zM56,70H58V72H56zM66,70H68V72H66zM8,72H10V74H8zM10,72H12V74H10zM12,72H14V74H12zM14,72H16V74H14zM16,72H18V74H16zM18,72H20V74H18zM20,72H22V74H20zM24,72H26V74H24zM34,72H36V74H34zM36,72H38V74H36zM38,72H40V74H38zM40,72H42V74H40zM46,72H48V74H46zM50,72H52V74H50zM54,72H56V74H54zM56,72H58V74H56zM58,72H60V74H58zM60,72H62V74H60zM64,72H66V74H64zM70,72H72V74H70z" id="qr-path" fill="#141414" fill-opacity="1" fill-rule="nonzero" stroke="none" /></svg></div>
-  <a class="dl" href="qr-print.png" download="abu-bashar-qr.png">
-    <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M288 416Q288 430 279 439Q270 448 256 448Q242 448 233 439Q224 430 224 416V173L151 247Q141 256 128 256Q115 256 105 247Q96 237 96 224Q96 211 105 201L233 73Q243 64 256 64Q269 64 279 73L407 201Q416 211 416 224Q416 237 407 247Q397 256 384 256Q371 256 361 247L288 173V416ZM64 96Q37 95 19 77Q1 59 0 32V0Q1 -27 19 -45Q37 -63 64 -64H448Q475 -63 493 -45Q511 -27 512 0V32Q511 59 493 77Q475 95 448 96H347L301 51Q281 32 256 32Q230 32 211 51L166 96H64ZM432 40Q454 38 456 16Q454 -6 432 -8Q410 -6 408 16Q410 38 432 40Z"/></svg>
-    تحميل نسخة للطباعة
-  </a>
-  <button class="closeqr" type="button" onclick="document.getElementById('qrDialog').close()">إغلاق</button>
+  <div class="qr-box">
+    <svg id="qrSvg" width="100%" height="100%" version="1.1" viewBox="0 0 82 82" xmlns="http://www.w3.org/2000/svg"><path shape-rendering="crispEdges" d="M8,8H10V10H8zM10,8H12V10H10zM12,8H14V10H12zM14,8H16V10H14zM16,8H18V10H16zM18,8H20V10H18zM20,8H22V10H20zM28,8H30V10H28zM30,8H32V10H30zM32,8H34V10H32zM34,8H36V10H34zM36,8H38V10H36zM38,8H40V10H38zM42,8H44V10H42zM44,8H46V10H44zM46,8H48V10H46zM48,8H50V10H48zM52,8H54V10H52zM54,8H56V10H54zM60,8H62V10H60zM62,8H64V10H62zM64,8H66V10H64zM66,8H68V10H66zM68,8H70V10H68zM70,8H72V10H70zM72,8H74V10H72zM8,10H10V12H8zM20,10H22V12H20zM34,10H36V12H34zM36,10H38V12H36zM38,10H40V12H38zM40,10H42V12H40zM44,10H46V12H44zM48,10H50V12H48zM54,10H56V12H54zM56,10H58V12H56zM60,10H62V12H60zM72,10H74V12H72zM8,12H10V14H8zM12,12H14V14H12zM14,12H16V14H14zM16,12H18V14H16zM20,12H22V14H20zM26,12H28V14H26zM28,12H30V14H28zM32,12H34V14H32zM34,12H36V14H34zM38,12H40V14H38zM44,12H46V14H44zM46,12H48V14H46zM56,12H58V14H56zM60,12H62V14H60zM64,12H66V14H64zM66,12H68V14H66zM68,12H70V14H68zM72,12H74V14H72zM8,14H10V16H8zM12,14H14V16H12zM14,14H16V16H14zM16,14H18V16H16zM20,14H22V16H20zM30,14H32V16H30zM34,14H36V16H34zM36,14H38V16H36zM40,14H42V16H40zM42,14H44V16H42zM44,14H46V16H44zM48,14H50V16H48zM54,14H56V16H54zM56,14H58V16H56zM60,14H62V16H60zM64,14H66V16H64zM66,14H68V16H66zM68,14H70V16H68zM72,14H74V16H72zM8,16H10V18H8zM12,16H14V18H12zM14,16H16V18H14zM16,16H18V18H16zM20,16H22V18H20zM28,16H30V18H28zM30,16H32V18H30zM36,16H38V18H36zM42,16H44V18H42zM44,16H46V18H44zM46,16H48V18H46zM48,16H50V18H48zM50,16H52V18H50zM54,16H56V18H54zM56,16H58V18H56zM60,16H62V18H60zM64,16H66V18H64zM66,16H68V18H66zM68,16H70V18H68zM72,16H74V18H72zM8,18H10V20H8zM20,18H22V20H20zM24,18H26V20H24zM26,18H28V20H26zM28,18H30V20H28zM32,18H34V20H32zM34,18H36V20H34zM36,18H38V20H36zM38,18H40V20H38zM40,18H42V20H40zM42,18H44V20H42zM44,18H46V20H44zM46,18H48V20H46zM50,18H52V20H50zM56,18H58V20H56zM60,18H62V20H60zM72,18H74V20H72zM8,20H10V22H8zM10,20H12V22H10zM12,20H14V22H12zM14,20H16V22H14zM16,20H18V22H16zM18,20H20V22H18zM20,20H22V22H20zM24,20H26V22H24zM28,20H30V22H28zM32,20H34V22H32zM36,20H38V22H36zM40,20H42V22H40zM44,20H46V22H44zM48,20H50V22H48zM52,20H54V22H52zM56,20H58V22H56zM60,20H62V22H60zM62,20H64V22H62zM64,20H66V22H64zM66,20H68V22H66zM68,20H70V22H68zM70,20H72V22H70zM72,20H74V22H72zM26,22H28V24H26zM28,22H30V24H28zM32,22H34V24H32zM36,22H38V24H36zM38,22H40V24H38zM40,22H42V24H40zM42,22H44V24H42zM50,22H52V24H50zM52,22H54V24H52zM54,22H56V24H54zM8,24H10V26H8zM14,24H16V26H14zM18,24H20V26H18zM20,24H22V26H20zM24,24H26V26H24zM26,24H28V26H26zM34,24H36V26H34zM36,24H38V26H36zM40,24H42V26H40zM50,24H52V26H50zM58,24H60V26H58zM62,24H64V26H62zM12,26H14V28H12zM16,26H18V28H16zM18,26H20V28H18zM22,26H24V28H22zM24,26H26V28H24zM26,26H28V28H26zM28,26H30V28H28zM30,26H32V28H30zM32,26H34V28H32zM34,26H36V28H34zM42,26H44V28H42zM48,26H50V28H48zM52,26H54V28H52zM56,26H58V28H56zM58,26H60V28H58zM60,26H62V28H60zM62,26H64V28H62zM70,26H72V28H70zM72,26H74V28H72zM8,28H10V30H8zM12,28H14V30H12zM14,28H16V30H14zM16,28H18V30H16zM20,28H22V30H20zM24,28H26V30H24zM28,28H30V30H28zM30,28H32V30H30zM32,28H34V30H32zM34,28H36V30H34zM36,28H38V30H36zM44,28H46V30H44zM46,28H48V30H46zM50,28H52V30H50zM52,28H54V30H52zM56,28H58V30H56zM60,28H62V30H60zM62,28H64V30H62zM64,28H66V30H64zM68,28H70V30H68zM72,28H74V30H72zM18,30H20V32H18zM22,30H24V32H22zM26,30H28V32H26zM28,30H30V32H28zM34,30H36V32H34zM44,30H46V32H44zM46,30H48V32H46zM48,30H50V32H48zM50,30H52V32H50zM52,30H54V32H52zM54,30H56V32H54zM58,30H60V32H58zM64,30H66V32H64zM66,30H68V32H66zM70,30H72V32H70zM10,32H12V34H10zM12,32H14V34H12zM16,32H18V34H16zM18,32H20V34H18zM20,32H22V34H20zM26,32H28V34H26zM30,32H32V34H30zM32,32H34V34H32zM36,32H38V34H36zM40,32H42V34H40zM44,32H46V34H44zM46,32H48V34H46zM48,32H50V34H48zM52,32H54V34H52zM60,32H62V34H60zM62,32H64V34H62zM66,32H68V34H66zM72,32H74V34H72zM8,34H10V36H8zM10,34H12V36H10zM14,34H16V36H14zM22,34H24V36H22zM28,34H30V36H28zM36,34H38V36H36zM38,34H40V36H38zM42,34H44V36H42zM44,34H46V36H44zM48,34H50V36H48zM52,34H54V36H52zM58,34H60V36H58zM60,34H62V36H60zM62,34H64V36H62zM64,34H66V36H64zM66,34H68V36H66zM68,34H70V36H68zM70,34H72V36H70zM72,34H74V36H72zM8,36H10V38H8zM12,36H14V38H12zM16,36H18V38H16zM20,36H22V38H20zM22,36H24V38H22zM34,36H36V38H34zM38,36H40V38H38zM40,36H42V38H40zM46,36H48V38H46zM52,36H54V38H52zM54,36H56V38H54zM56,36H58V38H56zM58,36H60V38H58zM60,36H62V38H60zM62,36H64V38H62zM66,36H68V38H66zM68,36H70V38H68zM70,36H72V38H70zM8,38H10V40H8zM12,38H14V40H12zM16,38H18V40H16zM18,38H20V40H18zM24,38H26V40H24zM26,38H28V40H26zM28,38H30V40H28zM32,38H34V40H32zM34,38H36V40H34zM40,38H42V40H40zM42,38H44V40H42zM44,38H46V40H44zM48,38H50V40H48zM50,38H52V40H50zM52,38H54V40H52zM56,38H58V40H56zM60,38H62V40H60zM70,38H72V40H70zM8,40H10V42H8zM12,40H14V42H12zM14,40H16V42H14zM20,40H22V42H20zM28,40H30V42H28zM30,40H32V42H30zM32,40H34V42H32zM34,40H36V42H34zM38,40H40V42H38zM42,40H44V42H42zM50,40H52V42H50zM52,40H54V42H52zM56,40H58V42H56zM60,40H62V42H60zM64,40H66V42H64zM66,40H68V42H66zM70,40H72V42H70zM8,42H10V44H8zM10,42H12V44H10zM14,42H16V44H14zM26,42H28V44H26zM30,42H32V44H30zM36,42H38V44H36zM40,42H42V44H40zM42,42H44V44H42zM52,42H54V44H52zM54,42H56V44H54zM56,42H58V44H56zM62,42H64V44H62zM66,42H68V44H66zM70,42H72V44H70zM8,44H10V46H8zM10,44H12V46H10zM12,44H14V46H12zM14,44H16V46H14zM18,44H20V46H18zM20,44H22V46H20zM22,44H24V46H22zM24,44H26V46H24zM28,44H30V46H28zM30,44H32V46H30zM34,44H36V46H34zM36,44H38V46H36zM42,44H44V46H42zM50,44H52V46H50zM56,44H58V46H56zM58,44H60V46H58zM60,44H62V46H60zM68,44H70V46H68zM70,44H72V46H70zM72,44H74V46H72zM26,46H28V48H26zM28,46H30V48H28zM30,46H32V48H30zM32,46H34V48H32zM36,46H38V48H36zM38,46H40V48H38zM48,46H50V48H48zM52,46H54V48H52zM54,46H56V48H54zM56,46H58V48H56zM62,46H64V48H62zM70,46H72V48H70zM72,46H74V48H72zM10,48H12V50H10zM12,48H14V50H12zM20,48H22V50H20zM22,48H24V50H22zM24,48H26V50H24zM26,48H28V50H26zM28,48H30V50H28zM30,48H32V50H30zM32,48H34V50H32zM36,48H38V50H36zM42,48H44V50H42zM46,48H48V50H46zM48,48H50V50H48zM54,48H56V50H54zM62,48H64V50H62zM70,48H72V50H70zM72,48H74V50H72zM10,50H12V52H10zM12,50H14V52H12zM14,50H16V52H14zM18,50H20V52H18zM24,50H26V52H24zM26,50H28V52H26zM30,50H32V52H30zM36,50H38V52H36zM38,50H40V52H38zM46,50H48V52H46zM50,50H52V52H50zM60,50H62V52H60zM62,50H64V52H62zM66,50H68V52H66zM68,50H70V52H68zM70,50H72V52H70zM72,50H74V52H72zM8,52H10V54H8zM10,52H12V54H10zM16,52H18V54H16zM18,52H20V54H18zM20,52H22V54H20zM24,52H26V54H24zM28,52H30V54H28zM30,52H32V54H30zM34,52H36V54H34zM40,52H42V54H40zM44,52H46V54H44zM46,52H48V54H46zM52,52H54V54H52zM56,52H58V54H56zM60,52H62V54H60zM62,52H64V54H62zM64,52H66V54H64zM66,52H68V54H66zM68,52H70V54H68zM72,52H74V54H72zM10,54H12V56H10zM16,54H18V56H16zM18,54H20V56H18zM22,54H24V56H22zM34,54H36V56H34zM38,54H40V56H38zM44,54H46V56H44zM46,54H48V56H46zM48,54H50V56H48zM50,54H52V56H50zM58,54H60V56H58zM60,54H62V56H60zM66,54H68V56H66zM70,54H72V56H70zM8,56H10V58H8zM12,56H14V58H12zM20,56H22V58H20zM24,56H26V58H24zM28,56H30V58H28zM32,56H34V58H32zM42,56H44V58H42zM48,56H50V58H48zM50,56H52V58H50zM52,56H54V58H52zM56,56H58V58H56zM58,56H60V58H58zM60,56H62V58H60zM62,56H64V58H62zM64,56H66V58H64zM66,56H68V58H66zM70,56H72V58H70zM24,58H26V60H24zM26,58H28V60H26zM28,58H30V60H28zM30,58H32V60H30zM34,58H36V60H34zM36,58H38V60H36zM42,58H44V60H42zM44,58H46V60H44zM46,58H48V60H46zM48,58H50V60H48zM50,58H52V60H50zM52,58H54V60H52zM56,58H58V60H56zM64,58H66V60H64zM66,58H68V60H66zM72,58H74V60H72zM8,60H10V62H8zM10,60H12V62H10zM12,60H14V62H12zM14,60H16V62H14zM16,60H18V62H16zM18,60H20V62H18zM20,60H22V62H20zM26,60H28V62H26zM28,60H30V62H28zM34,60H36V62H34zM40,60H42V62H40zM42,60H44V62H42zM44,60H46V62H44zM48,60H50V62H48zM52,60H54V62H52zM56,60H58V62H56zM60,60H62V62H60zM64,60H66V62H64zM66,60H68V62H66zM68,60H70V62H68zM8,62H10V64H8zM20,62H22V64H20zM24,62H26V64H24zM26,62H28V64H26zM30,62H32V64H30zM34,62H36V64H34zM38,62H40V64H38zM42,62H44V64H42zM44,62H46V64H44zM50,62H52V64H50zM52,62H54V64H52zM56,62H58V64H56zM64,62H66V64H64zM72,62H74V64H72zM8,64H10V66H8zM12,64H14V66H12zM14,64H16V66H14zM16,64H18V66H16zM20,64H22V66H20zM26,64H28V66H26zM28,64H30V66H28zM32,64H34V66H32zM38,64H40V66H38zM44,64H46V66H44zM46,64H48V66H46zM48,64H50V66H48zM56,64H58V66H56zM58,64H60V66H58zM60,64H62V66H60zM62,64H64V66H62zM64,64H66V66H64zM66,64H68V66H66zM8,66H10V68H8zM12,66H14V68H12zM14,66H16V68H14zM16,66H18V68H16zM20,66H22V68H20zM24,66H26V68H24zM26,66H28V68H26zM38,66H40V68H38zM40,66H42V68H40zM44,66H46V68H44zM46,66H48V68H46zM52,66H54V68H52zM56,66H58V68H56zM60,66H62V68H60zM64,66H66V68H64zM70,66H72V68H70zM8,68H10V70H8zM12,68H14V70H12zM14,68H16V70H14zM16,68H18V70H16zM20,68H22V70H20zM26,68H28V70H26zM34,68H36V70H34zM38,68H40V70H38zM40,68H42V70H40zM46,68H48V70H46zM48,68H50V70H48zM56,68H58V70H56zM64,68H66V70H64zM72,68H74V70H72zM8,70H10V72H8zM20,70H22V72H20zM28,70H30V72H28zM30,70H32V72H30zM34,70H36V72H34zM42,70H44V72H42zM46,70H48V72H46zM48,70H50V72H48zM50,70H52V72H50zM56,70H58V72H56zM66,70H68V72H66zM8,72H10V74H8zM10,72H12V74H10zM12,72H14V74H12zM14,72H16V74H14zM16,72H18V74H16zM18,72H20V74H18zM20,72H22V74H20zM24,72H26V74H24zM34,72H36V74H34zM36,72H38V74H36zM38,72H40V74H38zM40,72H42V74H40zM46,72H48V74H46zM50,72H52V74H50zM54,72H56V74H54zM56,72H58V74H56zM58,72H60V74H58zM60,72H62V74H60zM64,72H66V74H64zM70,72H72V74H70z" fill="#141414" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg>
+  </div>
+  <p class="qr-url">https://tbtbshyt-cmyk.github.io/bhyr776430697/</p>
+  <div class="dialog-actions">
+    <a class="dl" href="qr-print.png" download="abu-bashar-qr.png">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M288 416Q288 430 279 439Q270 448 256 448Q242 448 233 439Q224 430 224 416V173L151 247Q141 256 128 256Q115 256 105 247Q96 237 96 224Q96 211 105 201L233 73Q243 64 256 64Q269 64 279 73L407 201Q416 211 416 224Q416 237 407 247Q397 256 384 256Q371 256 361 247L288 173V416ZM64 96Q37 95 19 77Q1 59 0 32V0Q1 -27 19 -45Q37 -63 64 -64H448Q475 -63 493 -45Q511 -27 512 0V32Q511 59 493 77Q475 95 448 96H347L301 51Q281 32 256 32Q230 32 211 51L166 96H64ZM432 40Q454 38 456 16Q454 -6 432 -8Q410 -6 408 16Q410 38 432 40Z"/></svg>
+      تحميل نسخة للطباعة
+    </a>
+    <button class="printq" id="printBtn" type="button">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M128 0H384H128H384V96H320V64H192V96H128V0ZM96 128H416Q456 128 484 156Q512 184 512 224V320Q512 360 484 388Q456 416 416 416H384V512H128V416H96Q56 416 28 388Q0 360 0 320V224Q0 184 28 156Q56 128 96 128ZM192 448H320H192H320V320H192V448ZM416 240Q403 240 393 231Q384 221 384 208Q384 195 393 185Q403 176 416 176Q429 176 439 185Q448 195 448 208Q448 221 439 231Q429 240 416 240Z"/></svg>
+      طباعة بطاقة QR
+    </button>
+    <button class="closeqr" type="button" id="closeQrBtn">إغلاق</button>
+  </div>
 </dialog>
+
+<!-- ═══════════ بطاقة الطباعة (تظهر عند الطباعة فقط) ═══════════ -->
+<div id="print-card" aria-hidden="true">
+  <p class="p-title">محلات أبو بشار للملابس والأحذية</p>
+  <p class="p-sub">امسح الرمز لمتابعتنا على جميع المنصات</p>
+  <div class="p-qr" id="printQr"></div>
+  <p class="p-url">https://tbtbshyt-cmyk.github.io/bhyr776430697/</p>
+  <p class="p-note">واتساب · فيسبوك · انستغرام · سناب شات</p>
+</div>
 
 <div id="toast" role="status" aria-live="polite"></div>
 
 <!-- ═══════════════════════════════════════════════════════════════
      ✂️✂️✂️  منطقة التعديل السهل — لا تحتاج تعديل أي شيء آخر  ✂️✂️✂️
      ═══════════════════════════════════════════════════════════════
-   لإضافة حساب جديد: انسخ سطرًا موجودًا وغيّر (platform / title / sub / url)
-   المنصات الجاهزة: whatsapp, facebook, instagram, snapchat, telegram,
-                    tiktok, youtube, x, maps, website
-   مثال لإضافة تيك توك:
-   { platform:'tiktok', title:'تيك توك', sub:'شاهد أحدث الفيديوهات', url:'رابط حسابك' },
+   ✦ لإضافة حساب جديد: انسخ سطرًا وعدّل (platform / title / sub / url)
+   ✦ المنصات الجاهزة: whatsapp, facebook, instagram, snapchat, telegram,
+                      tiktok, youtube, x, maps, website
+   ✦ الحقل group يحدّد تحت أي عنوان يظهر الرابط:
+       social = تابعنا على منصاتنا الرسمية
+       shops  = فروعنا ومواقعنا
+       extra  = روابط إضافية
+   ✦ الحقول الاختيارية: featured: true (بطاقة ذهبية بارزة) · tag: "نص صغير"
    ═══════════════════════════════════════════════════════════════ -->
 <script>
 "use strict";
 
-/* ─── رابط الصفحة الرسمي (يُستخدم في المشاركة والنسخ ورمز QR) ─── */
+/* ═══════════════ ✏️ ابدأ التعديل من هنا ═══════════════ */
+
+/* رابط الصفحة الرسمي (يُستخدم في المشاركة والنسخ ورمز QR) */
 const SITE_URL = "https://tbtbshyt-cmyk.github.io/bhyr776430697/";
 
-/* ─── روابط حسابات محلات أبو بشار — عدّل هنا فقط ─── */
+/* عناوين المجموعات — المجموعة التي لا تحتوي روابط لا تظهر في الصفحة */
+const GROUPS = [
+  { id: "social", title: "تابعنا على منصاتنا الرسمية" },
+  { id: "shops",  title: "فروعنا ومواقعنا" },
+  { id: "extra",  title: "روابط إضافية" },
+];
+
+/* روابط حسابات محلات أبو بشار — عدّل هنا فقط */
 const LINKS = [
   {
     platform: "whatsapp",
+    group: "social",
     title: "واتساب — قناة التخفيضات",
     sub: "انضم لقناة تخفيضات أبو بشار الرسمية وكن أول من يعرف بالعروض",
     url: "https://whatsapp.com/channel/0029Vb85ukv5a23wwbnPLv46",
@@ -384,103 +449,228 @@ const LINKS = [
   },
   {
     platform: "facebook",
+    group: "social",
     title: "فيسبوك",
     sub: "تابعنا على فيسبوك",
     url: "https://www.facebook.com/share/19bNQY5Jr3/",
   },
   {
     platform: "instagram",
+    group: "social",
     title: "انستغرام",
     sub: "تابع أحدث المنتجات والصور — @bshyr75625",
     url: "https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=yx5dnba",
   },
   {
     platform: "snapchat",
+    group: "social",
     title: "سناب شات",
     sub: "أضفنا على سناب شات — bshyttbt26",
     url: "https://www.snapchat.com/add/bshyttbt26?share_id=Y56jsLpIkT0&locale=ar-EG",
   },
+
+  /* ──────── أضف حسابًا جديدًا: أزل التعليق عن السطر وعدّل رابطه ────────
+  { platform: "tiktok",   group: "extra", title: "تيك توك",  sub: "شاهد أحدث الفيديوهات والوصلات الجديدة", url: "https://www.tiktok.com/@…" },
+  { platform: "telegram", group: "extra", title: "تيليجرام", sub: "قناتنا الرسمية على تيليجرام",           url: "https://t.me/…" },
+  { platform: "youtube",  group: "extra", title: "يوتيوب",   sub: "فيديوهات المنتجات والمقاسات",           url: "https://www.youtube.com/@…" },
+  { platform: "maps",     group: "shops", title: "موقع المحل على الخريطة", sub: "افتح موقعنا في خرائط جوجل", url: "https://maps.google.com/?q=…" },
+  { platform: "website",  group: "extra", title: "الموقع الإلكتروني",     sub: "تسوّق أونلاين",              url: "https://…" },
+  ─────────────────────────────────────────────────────────────────────── */
 ];
+
 /* ═══════════ نهاية منطقة التعديل — لا تعدّل ما يلي إلّا إذا كنت مطوّرًا ═══════════ */
 
 /* أيقونات المنصات (FontAwesome 6 — مسارات رسمية) */
 const ICONS = {"whatsapp": "M381 351Q315 415 224 416Q162 415 112 386Q62 356 32 306Q3 256 2 194Q2 134 31 83L0 -32L118 -1Q167 -28 224 -28Q286 -27 336 2Q387 32 417 82Q447 132 448 194Q448 239 430 279Q413 319 381 351ZM224 9Q173 10 130 35L123 39L53 21L72 89L68 96Q40 141 39 194Q41 272 94 324Q146 377 224 378Q300 378 354 324Q409 270 411 194Q408 116 355 63Q302 11 224 9ZM325 147Q320 150 306 157Q292 163 287 165Q280 170 275 163Q271 158 266 151Q260 144 257 141Q253 135 245 140Q221 151 203 165Q185 179 170 206Q166 212 173 218Q178 222 186 236Q188 241 185 246Q184 247 181 256Q178 264 174 274Q170 282 168 287Q162 299 157 296Q156 296 156 296Q151 296 145 296Q139 297 130 290Q130 289 129 288Q124 284 118 273Q112 262 111 243Q112 223 121 206Q130 190 133 186Q133 186 134 186Q134 185 135 184Q140 175 165 148Q189 121 228 102Q254 91 268 88Q283 86 295 88Q304 90 316 97Q328 104 332 114Q339 136 336 141Q334 144 328 146Q326 147 325 147Z", "facebook": "M512 192Q511 264 477 321Q443 379 385 413Q328 447 256 448Q184 447 127 413Q69 379 35 321Q1 264 0 192Q2 100 55 33Q109 -34 194 -57V114H141V192H194V226Q193 355 319 353Q332 353 349 351Q365 349 375 347V276Q365 277 345 277Q314 277 300 264Q287 250 287 220V192H371L356 114H287V-62Q384 -48 447 22Q510 92 512 192Z", "instagram": "M224 307Q175 306 143 273Q110 241 109 192Q110 143 143 111Q175 78 224 77Q273 78 305 111Q338 143 339 192Q338 241 305 273Q273 306 224 307ZM224 117Q192 118 171 139Q150 160 149 192Q150 224 171 245Q192 266 224 267Q256 266 277 245Q298 224 299 192Q298 160 277 139Q256 118 224 117ZM371 312Q368 287 344 285Q319 287 317 312Q317 323 325 331Q332 338 344 338Q355 338 363 331Q370 323 371 312ZM447 284Q447 339 410 378Q371 415 317 415Q297 416 260 416Q224 416 188 416Q151 416 132 415Q78 415 38 378Q1 339 2 285Q0 265 0 228Q0 192 0 156Q0 120 2 100Q1 45 38 6Q77 -31 132 -30Q151 -31 188 -32Q224 -32 260 -32Q297 -31 317 -30Q371 -31 410 6Q447 45 447 100Q448 120 448 156Q448 192 448 228Q448 265 447 285ZM399 60Q386 30 356 17Q336 10 302 9Q268 8 240 8Q231 8 224 8Q217 8 208 8Q180 8 146 9Q113 10 92 17Q62 30 49 60Q42 81 41 114Q40 148 40 176Q40 185 40 192Q40 199 40 208Q40 236 41 270Q42 304 49 324Q62 354 92 367Q113 374 146 375Q180 377 208 376Q217 376 224 376Q231 376 240 376Q268 376 302 375Q336 374 356 367Q386 354 399 324Q406 304 407 270Q409 236 408 208Q408 199 408 192Q408 185 408 176Q409 148 407 114Q406 80 399 60Z", "snapchat": "M497 81Q491 94 480 100Q478 101 476 101Q475 102 473 103Q471 104 469 105Q435 123 417 150Q411 158 407 166Q406 171 407 173Q408 175 410 176Q416 180 421 183Q428 187 432 190Q446 200 452 211Q461 229 454 247Q443 272 414 273Q408 273 402 272Q401 272 399 271Q399 288 398 306Q395 336 386 354Q377 373 365 385Q351 401 332 412Q298 431 256 431Q214 431 180 412Q161 401 147 385Q135 372 126 354Q117 336 114 306Q113 288 113 271Q111 271 110 272Q104 273 98 273Q69 272 58 247Q51 229 60 211Q66 200 80 190Q83 188 88 185Q90 184 91 183Q95 180 101 176Q103 175 105 173Q106 171 104 166Q101 158 95 150Q77 124 44 106Q41 104 39 103Q23 97 15 81Q9 65 24 49Q29 43 36 39Q50 31 66 27Q70 26 72 24Q75 22 76 18Q77 15 80 10Q84 4 89 1Q104 -8 122 -7Q139 -7 159 -13Q168 -16 178 -23Q190 -31 209 -39Q228 -46 256 -47Q284 -46 303 -39Q322 -31 334 -23Q334 -23 334 -23Q344 -16 353 -13Q373 -7 389 -7Q390 -7 390 -7Q408 -8 423 0Q429 5 433 12Q435 15 436 18Q437 22 440 24Q442 26 445 27Q461 31 476 39Q483 43 489 49V50Q503 65 497 81ZM463 63Q446 55 434 52Q425 50 418 46Q411 41 411 33Q411 26 407 23Q402 20 388 20Q371 21 344 13Q332 8 320 1Q308 -7 294 -13Q279 -19 256 -20Q234 -19 219 -13Q204 -7 193 1Q181 8 168 13Q141 21 124 20Q110 20 105 23Q101 26 101 33Q101 41 94 46Q87 50 78 52Q66 55 49 63Q40 69 42 72Q44 75 48 77Q103 107 120 137Q137 168 135 174Q136 174 136 174Q138 181 131 188Q123 195 106 205Q99 210 95 212Q79 223 83 237Q88 246 98 246Q101 246 104 245Q115 242 124 239Q130 236 135 235Q136 235 137 235Q142 234 142 240Q142 242 141 244Q139 267 141 303Q143 327 150 342Q157 356 167 367Q172 374 193 388Q215 402 256 404Q297 402 319 388Q340 374 345 367Q355 357 362 342Q369 328 371 303Q372 286 372 269Q371 253 370 242Q370 241 370 241Q370 234 375 235Q376 235 377 235Q382 236 388 239Q397 243 408 245Q411 246 414 246Q424 246 429 237Q433 223 417 212Q413 210 406 206Q389 195 381 188Q374 181 376 174Q376 174 377 174Q375 169 392 138Q409 107 464 77Q468 76 470 72Q472 69 463 63Z", "telegram": "M248 440Q179 439 123 406Q67 373 34 317Q1 261 0 192Q1 123 34 67Q67 11 123 -22Q179 -55 248 -56Q317 -55 373 -22Q429 11 462 67Q495 123 496 192Q495 261 462 317Q429 373 373 406Q317 439 248 440ZM363 271Q361 251 356 217Q351 184 345 150Q339 116 335 93Q329 67 318 68Q302 68 287 80Q283 83 279 86Q262 97 250 106Q238 114 223 123Q208 134 211 141Q213 149 223 157Q226 160 229 163Q230 165 240 173Q256 188 275 207Q295 225 297 230Q298 231 296 234Q293 236 291 235Q287 234 186 165Q171 155 159 156Q152 156 141 159Q130 161 121 165Q118 166 115 166Q94 171 94 181Q95 188 112 195Q221 242 257 257Q307 278 325 284Q344 291 349 291Q354 291 359 288Q362 285 363 281Q363 276 363 271Z", "tiktok": "M448 238Q380 238 325 277V99Q325 47 296 6Q268 -35 220 -54Q171 -71 123 -59Q75 -47 40 -8Q7 31 1 81Q-4 130 20 176Q45 221 89 244Q134 266 185 260V170Q161 177 139 169Q117 162 102 142Q88 122 88 98Q88 75 102 54Q117 35 140 28Q162 20 186 28Q209 36 223 55Q237 74 237 99V448H325Q325 437 327 426Q338 375 381 346Q412 326 448 325Z", "youtube": "M550 324Q538 361 501 373Q477 378 427 381Q377 383 334 384Q291 384 288 384Q285 384 242 384Q199 383 149 381Q99 378 75 373Q38 361 26 324Q21 301 18 271Q16 240 15 216Q15 193 15 192Q15 190 15 167Q16 143 18 113Q21 82 26 59Q38 22 75 11Q99 6 149 3Q199 1 242 0Q285 0 288 0Q288 0 288 0Q291 0 334 0Q377 1 427 3Q477 6 501 11Q538 22 550 59Q555 82 558 113Q560 143 561 167Q561 190 561 192Q561 193 561 216Q560 240 558 271Q555 301 550 324ZM232 110V273V110V273L375 192L232 110Z", "x": "M389 400H460H389H460L306 224L487 -16H345L234 129L107 -16H36L201 172L27 400H172L273 267L389 400ZM364 26H404H364H404L151 360H109L364 26Z", "maps": "M216 -51Q243 -18 282 38Q321 93 352 152Q382 211 384 256Q382 338 328 392Q274 446 192 448Q110 446 56 392Q2 338 0 256Q2 211 32 152Q63 93 102 38Q141 -18 168 -51Q178 -63 192 -63Q206 -63 216 -51ZM192 320Q228 319 247 288Q265 256 247 224Q228 193 192 192Q156 193 137 224Q119 256 137 288Q156 319 192 320Z", "website": "M352 192Q352 159 349 128H163Q160 159 160 192Q160 225 163 256H349Q352 225 352 192ZM381 256H504H381H504Q512 225 512 192Q512 159 504 128H381Q384 159 384 192Q384 225 381 256ZM493 288H377H493H377Q361 386 321 440Q381 423 426 384Q470 344 493 288ZM344 288H168H344H168Q177 343 195 383Q211 418 228 434Q245 449 256 448Q267 449 284 434Q301 418 317 383Q335 343 344 288ZM135 288H19H135H19Q42 344 86 384Q131 423 191 440Q151 386 135 288ZM8 256H131H8H131Q128 225 128 192Q128 159 131 128H8Q0 159 0 192Q0 225 8 256ZM195 1Q177 41 168 96H344Q335 41 317 1Q301 -34 284 -50Q267 -65 256 -64Q245 -65 228 -50Q211 -34 195 1ZM135 96Q151 -2 191 -56Q131 -39 86 0Q42 40 19 96H135ZM493 96Q470 40 426 0Q381 -39 322 -56Q361 -2 377 96H494Z", "check": "M439 343Q448 333 448 320Q448 307 439 297L183 41Q173 32 160 32Q147 32 137 41L9 169Q0 179 0 192Q0 205 9 215Q19 224 32 224Q45 224 55 215L160 109L393 343Q403 352 416 352Q429 352 439 343Z"};
 
+const SVG = (d, cls) => '<svg' + (cls ? ' class="' + cls + '"' : "") + ' viewBox="0 0 512 512" aria-hidden="true"><path d="' + d + '"/></svg>';
 const CHEV_SVG = '<svg class="chev" viewBox="0 0 512 512" aria-hidden="true"><path d="M330 44 L170 256 L330 468"/></svg>';
 
+/* ─── بناء بطاقة رابط ─── */
 function buildCard(item, i) {
   const icon = ICONS[item.platform] || ICONS.website;
-  const a = document.createElement("a");
-  a.className = "btn" + (item.featured ? " featured" : "");
-  a.dataset.p = item.platform;
-  a.href = item.url;                       /* الرابط كما هو — دون أي تغيير */
-  a.target = "_blank";
-  a.rel = "noopener noreferrer";
-  a.style.setProperty("--i", i);
-  a.setAttribute("aria-label", item.title + " — " + item.sub);
-  a.innerHTML =
-    '<span class="badge"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="' + icon + '"/></svg></span>' +
+  const card = document.createElement("article");
+  card.className = "card" + (item.featured ? " featured" : "");
+  card.dataset.p = item.platform;
+  card.dataset.search = [item.title, item.sub, item.platform, item.tag || ""].join(" ").toLowerCase();
+  card.style.setProperty("--i", i);
+
+  const hit = document.createElement("a");
+  hit.className = "card-hit";
+  hit.href = item.url;                     /* الرابط كما هو — دون أي تغيير */
+  hit.target = "_blank";
+  hit.rel = "noopener noreferrer";
+  hit.setAttribute("aria-label", item.title + " — " + item.sub);
+
+  const copy = document.createElement("button");
+  copy.type = "button";
+  copy.className = "copy-one";
+  copy.dataset.copy = item.url;
+  copy.dataset.name = item.title;
+  copy.setAttribute("aria-label", "نسخ رابط " + item.title);
+  copy.innerHTML = SVG(ICONS.copy);
+
+  card.innerHTML =
+    '<span class="badge">' + SVG(icon) + "</span>" +
     '<span class="txt">' +
       '<span class="t">' + item.title + (item.tag ? ' <span class="tag">' + item.tag + "</span>" : "") + "</span>" +
       '<span class="s">' + item.sub + "</span>" +
-    "</span>" + CHEV_SVG;
-  return a;
+    "</span>";
+  card.appendChild(copy);
+  card.insertAdjacentHTML("beforeend", CHEV_SVG);
+  card.appendChild(hit);
+  return card;
 }
 
 const linksEl = document.getElementById("links");
-LINKS.forEach((item, i) => linksEl.appendChild(buildCard(item, i)));
+
+function renderLinks() {
+  linksEl.textContent = "";
+  let order = 0;
+  GROUPS.forEach(function (g) {
+    const items = LINKS.filter(function (l) { return (l.group || "social") === g.id; });
+    if (!items.length) return;                       /* لا نُظهر مجموعة فارغة */
+    const section = document.createElement("section");
+    section.className = "group";
+    section.dataset.group = g.id;
+    const h = document.createElement("h2");
+    h.className = "group-title";
+    h.textContent = g.title;
+    const list = document.createElement("div");
+    list.className = "cards";
+    items.forEach(function (item) { list.appendChild(buildCard(item, order++)); });
+    section.appendChild(h);
+    section.appendChild(list);
+    linksEl.appendChild(section);
+  });
+}
+renderLinks();
 
 /* ─── إشعار صغير ─── */
 const toastEl = document.getElementById("toast");
 let toastTimer;
 function toast(msg) {
-  toastEl.innerHTML = msg + ' <svg viewBox="0 0 512 512" aria-hidden="true"><path d="' + ICONS.check + '"/></svg>';
+  toastEl.innerHTML = msg + SVG(ICONS.check);
   toastEl.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2400);
+  toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2400);
 }
 
-/* ─── نسخ الرابط ─── */
-async function copyLink() {
+/* ─── نسخ أي نص ─── */
+async function copyText(text) {
   try {
-    await navigator.clipboard.writeText(SITE_URL);
+    await navigator.clipboard.writeText(text);
+    return true;
   } catch (e) {
     const ta = document.createElement("textarea");
-    ta.value = SITE_URL;
-    ta.style.position = "fixed";
-    ta.style.opacity = "0";
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;opacity:0";
     document.body.appendChild(ta);
     ta.select();
-    try { document.execCommand("copy"); } catch (e2) {}
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
     ta.remove();
+    return ok;
   }
-  toast("تم نسخ رابط الصفحة");
 }
-document.getElementById("copyBtn").addEventListener("click", copyLink);
+
+/* نسخ رابط الصفحة */
+document.getElementById("copyBtn").addEventListener("click", async function () {
+  await copyText(SITE_URL);
+  toast("تم نسخ رابط الصفحة");
+});
+
+/* نسخ رابط منصة واحدة من بطاقتها */
+linksEl.addEventListener("click", async function (e) {
+  const btn = e.target.closest(".copy-one");
+  if (!btn) return;
+  e.preventDefault();
+  e.stopPropagation();
+  await copyText(btn.dataset.copy);
+  toast("تم نسخ رابط " + btn.dataset.name);
+});
 
 /* ─── مشاركة الصفحة ─── */
-document.getElementById("shareBtn").addEventListener("click", async () => {
+const SHARE_TITLE = "محلات أبو بشار للملابس والأحذية";
+const SHARE_TEXT = "تابعنا على جميع منصات التواصل الاجتماعي";
+
+document.getElementById("shareBtn").addEventListener("click", async function () {
   if (navigator.share) {
     try {
-      await navigator.share({
-        title: "محلات أبو بشار للملابس والأحذية",
-        text: "تابعنا على جميع منصات التواصل الاجتماعي",
-        url: SITE_URL,
-      });
+      await navigator.share({ title: SHARE_TITLE, text: SHARE_TEXT, url: SITE_URL });
     } catch (e) { /* أُلغيت المشاركة */ }
   } else {
-    copyLink();
+    await copyText(SITE_URL);
+    toast("تم نسخ رابط الصفحة — الصقه وأرسله");
   }
+});
+
+/* إرسال الصفحة مباشرة إلى واتساب */
+document.getElementById("waShareBtn").addEventListener("click", function () {
+  const msg = SHARE_TITLE + "\n" + SHARE_TEXT + "\n" + SITE_URL;
+  window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank", "noopener,noreferrer");
+});
+
+/* ─── البحث في الروابط ─── */
+const searchEl = document.getElementById("search");
+const clearBtn = document.getElementById("clearSearch");
+const statusEl = document.getElementById("filterStatus");
+const noResEl = document.getElementById("noResults");
+
+function applyFilter() {
+  const q = searchEl.value.trim().toLowerCase();
+  let shown = 0;
+  linksEl.querySelectorAll(".group").forEach(function (sec) {
+    let visible = 0;
+    sec.querySelectorAll(".card").forEach(function (card) {
+      const ok = !q || (card.dataset.search || "").indexOf(q) !== -1;
+      card.classList.toggle("hidden", !ok);
+      if (ok) visible++;
+    });
+    sec.classList.toggle("hidden", visible === 0);
+    shown += visible;
+  });
+  noResEl.classList.toggle("show", shown === 0);
+  statusEl.textContent = q ? (shown + (shown === 1 ? " رابط مطابق" : " روابط مطابقة")) : "";
+  clearBtn.hidden = !q;
+}
+searchEl.addEventListener("input", applyFilter);
+clearBtn.addEventListener("click", function () {
+  searchEl.value = "";
+  applyFilter();
+  searchEl.focus();
 });
 
 /* ─── نافذة QR ─── */
 const qrDialog = document.getElementById("qrDialog");
-document.getElementById("qrBtn").addEventListener("click", () => {
+function openDialog() {
   if (typeof qrDialog.showModal === "function") qrDialog.showModal();
-  else qrDialog.setAttribute("open", "");
+  else qrDialog.setAttribute("open", "");            /* متصفحات لا تدعم <dialog> */
+}
+function closeDialog() {
+  if (typeof qrDialog.close === "function") qrDialog.close();
+  else qrDialog.removeAttribute("open");
+}
+document.getElementById("qrBtn").addEventListener("click", openDialog);
+document.getElementById("closeQrBtn").addEventListener("click", closeDialog);
+qrDialog.addEventListener("click", function (e) {
+  if (e.target === qrDialog) closeDialog();          /* النقر خارج النافذة يغلقها */
 });
-qrDialog.addEventListener("click", (e) => {
-  if (e.target === qrDialog) qrDialog.close(); /* النقر خارج النافذة يغلقها */
+
+/* نسخ الرمز إلى بطاقة الطباعة (بدون تكرار المعرّفات) */
+(function preparePrintCard() {
+  const src = document.getElementById("qrSvg");
+  const box = document.getElementById("printQr");
+  if (!src || !box) return;
+  const clone = src.cloneNode(true);
+  clone.removeAttribute("id");
+  clone.querySelectorAll("[id]").forEach(function (n) { n.removeAttribute("id"); });
+  box.appendChild(clone);
+})();
+
+document.getElementById("printBtn").addEventListener("click", function () {
+  window.print();
 });
 </script>
 </body>
